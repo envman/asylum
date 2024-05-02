@@ -10,7 +10,7 @@ func _ready():
 func _physics_process(delta):
 	player.get_node("AnimationTree").advance(delta * 2)
 
-func animation_finished(name):
+func animation_finished(_name):
 	player.change_state("idle")
 
 func exit():

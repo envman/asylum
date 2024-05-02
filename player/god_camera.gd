@@ -8,7 +8,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if freeze:
 		return
 	

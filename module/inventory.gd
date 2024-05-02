@@ -8,13 +8,13 @@ func _ready():
 	
 	GameObject.setup_objects(multiplayer_spawner)
 
-func has_named_item(name: String):
+func has_named_item(item_name: String):
 	for child in get_children():
 		if child is MultiplayerSpawner:
 			continue
 		
 		var obj = GameObject.object(child)
-		if obj.object_name == name:
+		if obj.object_name == item_name:
 			return true
 	
 	return false

@@ -4,7 +4,7 @@ class_name MoveState
 func _ready():
 	player.set_animation("Walk")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if player.direction:
 		#playback.travel("Walk")
 		#animation_player.play("Walking_A")

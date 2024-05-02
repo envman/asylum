@@ -48,7 +48,7 @@ func remove_ui():
 	get_parent().remove_child(action_ui)
 	action_ui = null
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 	

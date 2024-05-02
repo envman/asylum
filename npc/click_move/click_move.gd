@@ -19,7 +19,7 @@ func _ready():
 	nav_agent = parent.get_node(^"NavigationAgent3D")
 	nav_agent.velocity_computed.connect(move_player)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var next_position: Vector3 = nav_agent.get_next_path_position()
 	var direction: Vector3 = parent.global_position.direction_to(next_position) * nav_agent.max_speed
 	var new_agent_velocity: Vector3 = parent.velocity + (direction - parent.velocity)

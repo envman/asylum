@@ -22,7 +22,7 @@ var character_name: String
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	player = get_parent().player
 	character_name = get_parent().character_name
 	

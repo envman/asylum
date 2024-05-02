@@ -19,7 +19,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.make_current()
 	
-func _process(delta):
+func _process(_delta):
 	global_position = $"..".global_position
 	
 

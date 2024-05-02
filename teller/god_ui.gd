@@ -49,7 +49,7 @@ func _ready():
 		button.pressed.connect(func(): chat_selected(x))
 		return button
 
-func _process(delta):
+func _process(_delta):
 	control.visible = selected != null and selected is Character
 	
 	if Input.is_action_just_pressed("leave"):

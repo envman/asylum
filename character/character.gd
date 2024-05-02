@@ -77,18 +77,18 @@ func accept_player():
 	camera = cam
 	player = true
 
-func set_animation(name):
+func set_animation(animation_name):
 	if player:
-		current_animation = name
+		current_animation = animation_name
 
 @rpc("call_local", "reliable")
 func hand_off(id):
 	set_multiplayer_authority(id)
-	var player = MultiplayerController.get_local_player()
-	player.character = get_path()
-	print("character set to", player.character)
+	var local_player = MultiplayerController.get_local_player()
+	local_player.character = get_path()
+	print("character set to", local_player.character)
 	
-	if player.id == id and not player.teller:
+	if local_player.id == id and not local_player.teller:
 		accept_player()
-		$Person/NameLabel.text = player.player_name
+		$Person/NameLabel.text = local_player.player_name
 		#name_label.text = player.player_name

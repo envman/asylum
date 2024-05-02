@@ -25,6 +25,6 @@ func _ready():
 	parent.add_child(lockable)
 	target.name_updated.connect(func(x): lockable.action_name = x)
 
-func toggle_lock(player):
+func toggle_lock(_player):
 	locked = !locked
 

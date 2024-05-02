@@ -10,5 +10,5 @@ func setup(setup_animation, setup_player, setup_last_state):
 	self.last_state = setup_last_state
 	self.player = setup_player
 
-func animation_finished(animation_name):
+func animation_finished(_animation_name):
 	pass

@@ -28,9 +28,7 @@ func _state_changed(locked: bool):
 	is_locked = locked
 	update_name()
 
-func update_name():
-	var key = _has_key()
-	
+func update_name():	
 	if _has_key():
 		if is_locked:
 			action_name = "Unlock"
@@ -42,7 +40,7 @@ func update_name():
 		else:
 			action_name = "Lock (KEY REQUIRED)"
 
-func _process(delta):
+func _process(_delta):
 	update_name()
 
 @rpc("any_peer", "call_local", "reliable")

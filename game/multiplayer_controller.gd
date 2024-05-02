@@ -45,10 +45,6 @@ func _log(text: String):
 	log.append(text)
 	print(text)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 @rpc("any_peer", "call_local", "reliable")
 func add_player(id, name):
 	print("add_player: " + str(id) + " - " + name)
@@ -62,29 +58,10 @@ func add_player(id, name):
 		player.teller = multiplayer.get_remote_sender_id() == 1
 		
 	players.add_child(player)
-	
-	#players.append({
-		#"id": id,
-		#"name": name
-	#})
-	#
-	#player_joined.emit(id, name)
-	#load_player_details.rpc(id, name)
 
 func get_player_name(id: int):
 	var player = players.get_children().filter(func(x): return x.id == id)[0]
 	return player.player_name
-	#var player = players.filter(func(x): return x.id == id)[0]
-	#return player.name
-
-#@rpc("authority", "call_remote", "reliable")
-#func load_player_details(id: int, name: String):
-	#players.append({
-		#"id": id,
-		#"name": name
-	#})
-	#
-	#player_joined.emit(id, name)
 
 func join_lobby():	
 	add_player.rpc_id(1, multiplayer.get_unique_id(), player_name)
@@ -102,9 +79,3 @@ func get_players():
 
 func get_player(id: int):
 	return players.get_children().filter(func(x): return x.id == id)[0]
-
-#func _send_players():
-	#for player in players:
-		#load_player_details.rpc(player.id, player.name)
-
-#@rpc("any_peer", "reliable")

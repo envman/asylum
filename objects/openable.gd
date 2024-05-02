@@ -51,5 +51,5 @@ func _process(delta):
 			
 			last_state = open
 
-func toggle_open(player):
+func toggle_open(_player):
 	open = !open

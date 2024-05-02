@@ -8,9 +8,9 @@
 [ext_resource type="Script" path="res://world/object_manager.gd" id="6_c3j2b"]
 [ext_resource type="PackedScene" uid="uid://bsi3ob4b7j6m5" path="res://objects/torch_mounted.tscn" id="6_npvo0"]
 [ext_resource type="Script" path="res://chat/chat_manager.gd" id="7_jhx5u"]
+[ext_resource type="PackedScene" uid="uid://fn5f07bqinu4" path="res://character/rogue/rogue.tscn" id="9_41mn5"]
 [ext_resource type="PackedScene" uid="uid://cml2buuel3xdw" path="res://multiplayer/multiplayer_list.tscn" id="9_vihe7"]
 [ext_resource type="PackedScene" uid="uid://cvg34ojw0fxol" path="res://chat/chat.tscn" id="10_5yrhy"]
-[ext_resource type="PackedScene" uid="uid://fn5f07bqinu4" path="res://character/rogue/rogue.tscn" id="10_tagth"]
 [ext_resource type="PackedScene" uid="uid://dfa72tn0rxwp6" path="res://objects/door.tscn" id="12_3331m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ptlyu"]
@@ -110,8 +110,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.5358
 
 [node name="Characters" type="Node3D" parent="."]
 
-[node name="Hero1" parent="Characters" instance=ExtResource("10_tagth")]
-transform = Transform3D(0.00134392, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00134392, 13.5636, 0, 18.6752)
+[node name="Rogue" parent="Characters" instance=ExtResource("9_41mn5")]
 hero = true
 
 [node name="CharacterSpawn" type="Node3D" parent="."]

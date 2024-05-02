@@ -16,16 +16,16 @@ extends Control
 
 var world_scene = preload("res://world/world.tscn")
 
-func _process(delta):
+func _process(_delta):
 	var teller_count = players.get_children().filter(func(x): return x.teller == true).size()
 	var hero_count = players.get_children().filter(func(x): return x.teller == false).size()
 	
 	if teller_names.get_child_count() != teller_count or hero_names.get_child_count() != hero_count:
-		for name in teller_names.get_children():
-			teller_names.remove_child(name)
+		for x in teller_names.get_children():
+			teller_names.remove_child(x)
 		
-		for name in hero_names.get_children():
-			hero_names.remove_child(name)
+		for x in hero_names.get_children():
+			hero_names.remove_child(x)
 		
 		for player in players.get_children():
 			_add_player(player.id, player.player_name, player.teller)
@@ -40,21 +40,15 @@ func _ready():
 	#for player in MultiplayerController.players:
 		#_add_player(player.id, player.name)
 
-func _player_joined(id, name):
+func _player_joined(_id, _name):
 	pass
-	#_add_player(id, name)
 
-func _player_left(id):
+func _player_left(_id):
 	pass
-	#print('left process')
-	#var label = player_names.get_node(str(id))
-	#print(label)
-	#player_names.remove_child(label)
 
-func _add_player(id, name, teller):
-	var keeper = false
+func _add_player(id, player_name, teller):
 	var button = Button.new()
-	button.text = name
+	button.text = player_name
 	button.name = str(id)
 	
 	if multiplayer.is_server():
@@ -72,9 +66,9 @@ func _toggle_teller(id):
 
 @rpc("any_peer", "call_local", "reliable")
 func message(text: String, id: int):
-	var name = MultiplayerController.get_player_name(id)
+	var player_name = MultiplayerController.get_player_name(id)
 	var label = Label.new()
-	label.text = name + ": " + text
+	label.text = player_name + ": " + text
 	chat_lines.add_child(label)
 
 func _on_message_text_submitted(text):

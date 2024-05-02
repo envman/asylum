@@ -31,13 +31,13 @@ func add_action(action: Action):
 	actions.append(action)
 	var label = Label.new()
 	label.text = action.action_name
-	action.name_updated.connect(func(name): 
-		label.text = name)
+	action.name_updated.connect(func(x): 
+		label.text = x)
 	actions_list.add_child(label)
 	
 	_update_colors()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("select"):
 		actions[index].act.rpc_id(1)
 		
