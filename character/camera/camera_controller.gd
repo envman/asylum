@@ -21,7 +21,6 @@ func _ready():
 	
 func _process(_delta):
 	global_position = $"..".global_position
-	
 
 func _input(event):
 	if freeze:
@@ -31,9 +30,6 @@ func _input(event):
 		var x_rotation = clamp(rotation.x - event.relative.y / 1000 * sensitivity, -0.5, 0.5)
 		var y_rotation = rotation.y - event.relative.x / 1000 * sensitivity
 		rotation = Vector3(x_rotation, y_rotation, 0)
-		#rotation = Vector3(x_rotation, y_rotation, 0)
-		#parent.rotation_degrees.y = y_rotation
-		#parent.rotation = Vector3(x_rotation, y_rotation, 0)
 		
 	if UI.focus:
 		return

@@ -15,7 +15,9 @@ func _has_key():
 		return false
 	#var character = characters.get_children().filter(func(x): return x.get_multiplayer_authority() == player.id)[0]
 
-	var inventories = character.get_children().filter(func(x): return x is Inventory)
+	var person = character.get_node(^"Person")
+
+	var inventories = person.get_children().filter(func(x): return x is Inventory)
 	#print("inventories: ", inventories.size())
 	if inventories.size() < 1:
 		return false

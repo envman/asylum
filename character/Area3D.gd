@@ -15,4 +15,3 @@ func _process(delta):
 	#print(get_parent().find_bone("handIK.r")) #38
 	transform = get_parent().get_bone_global_pose(bone_id)
 	rotation_degrees.z += 90
-	

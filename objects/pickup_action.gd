@@ -18,8 +18,9 @@ func _process(delta):
 func act():
 	var player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 	var character = characters.get_children().filter(func(x): return x.get_multiplayer_authority() == player.id)[0]
+	var person = character.get_node(^"Person")
 	
-	var modules = character.get_children().filter(func(x): return x is Inventory)
+	var modules = person.get_children().filter(func(x): return x is Inventory)
 	if modules.size() == 1:
 		var inventory = modules[0]
 		var obj = get_parent().get_parent()
