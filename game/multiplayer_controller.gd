@@ -94,7 +94,7 @@ func join_lobby():
 	main.add_child(lobby)
 	main.remove_child(main_menu)
 
-func get_local_player():
+func get_local_player() -> Player:
 	return players.get_children().filter(func(x): return x.id == multiplayer.get_unique_id())[0]
 
 func get_players():

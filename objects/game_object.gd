@@ -34,14 +34,22 @@ static func setup_objects(multiplayer_spawner: MultiplayerSpawner):
 @export var object_name: String
 
 @onready var sync = $MultiplayerSynchronizer
+@onready var label = $Label3D
 
 func _ready():
+	print("GAME OBJECT")
 	sync.root_path = ^"../.."
 	#sync.root_path = get_parent().get_path()
 	
 	var config: SceneReplicationConfig = sync.replication_config
 	config.add_property(^".:position")
 	
+	config.add_property(^"Object/Label3D:text")
+	config.property_set_replication_mode(^"Object/Label3D:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	
+	label.text = object_name
+	if get_parent().get_node(^"Model") != null:
+		label.visible = false
 	#print(sync.root_path)
 	#print(sync.replication_config.get_properties())
 	

@@ -5,12 +5,12 @@
 [ext_resource type="MeshLibrary" uid="uid://daweaatc3bstm" path="res://world/walls_library.tres" id="3_6pjkv"]
 [ext_resource type="MeshLibrary" uid="uid://co4l0amg5sgy8" path="res://world/stairs_library.tres" id="4_bgx2j"]
 [ext_resource type="MeshLibrary" uid="uid://c8clp8e07dltm" path="res://world/objects_library.tres" id="5_m4oe2"]
+[ext_resource type="Script" path="res://world/object_manager.gd" id="6_c3j2b"]
 [ext_resource type="PackedScene" uid="uid://bsi3ob4b7j6m5" path="res://objects/torch_mounted.tscn" id="6_npvo0"]
 [ext_resource type="Script" path="res://chat/chat_manager.gd" id="7_jhx5u"]
-[ext_resource type="PackedScene" uid="uid://fn5f07bqinu4" path="res://character/rogue.tscn" id="8_26pu2"]
-[ext_resource type="PackedScene" uid="uid://dbex6v1vvb5ja" path="res://character/wizard.tscn" id="8_cu5gm"]
 [ext_resource type="PackedScene" uid="uid://cml2buuel3xdw" path="res://multiplayer/multiplayer_list.tscn" id="9_vihe7"]
 [ext_resource type="PackedScene" uid="uid://cvg34ojw0fxol" path="res://chat/chat.tscn" id="10_5yrhy"]
+[ext_resource type="PackedScene" uid="uid://fn5f07bqinu4" path="res://character/rogue/rogue.tscn" id="10_tagth"]
 [ext_resource type="PackedScene" uid="uid://dfa72tn0rxwp6" path="res://objects/door.tscn" id="12_3331m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ptlyu"]
@@ -91,6 +91,7 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 spawn_path = NodePath("../Objects")
 
 [node name="Objects" type="Node3D" parent="."]
+script = ExtResource("6_c3j2b")
 
 [node name="Door" parent="Objects" instance=ExtResource("12_3331m")]
 transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, 3.93736, 0.0581454, 17.1305)
@@ -109,34 +110,14 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.5358
 
 [node name="Characters" type="Node3D" parent="."]
 
-[node name="Wizard" parent="Characters" instance=ExtResource("8_cu5gm")]
-transform = Transform3D(0.0625641, 0, -0.998041, 0, 1, 0, 0.998041, 0, 0.0625641, 4.88393, 0.0581435, -5.50154)
-character_name = "Flibbard"
-
-[node name="Hero1" parent="Characters" instance=ExtResource("8_26pu2")]
+[node name="Hero1" parent="Characters" instance=ExtResource("10_tagth")]
 transform = Transform3D(0.00134392, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00134392, 13.5636, 0, 18.6752)
-hero = true
-
-[node name="Hero2" parent="Characters" node_paths=PackedStringArray("model") instance=ExtResource("8_26pu2")]
-transform = Transform3D(0.00134392, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00134392, 13.3732, 0, 30.9568)
-model = NodePath("../Hero1")
-hero = true
-
-[node name="Hero3" parent="Characters" node_paths=PackedStringArray("model") instance=ExtResource("8_26pu2")]
-transform = Transform3D(-0.0339227, 0, -0.999424, 0, 1, 0, 0.999424, 0, -0.0339227, -1.45575, 0, 30.5494)
-model = NodePath("../Hero1")
-hero = true
-
-[node name="Hero4" parent="Characters" node_paths=PackedStringArray("model") instance=ExtResource("8_26pu2")]
-transform = Transform3D(0.00134392, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00134392, 8.93536, 1.90735e-06, -15.5031)
-model = NodePath("../Hero1")
 hero = true
 
 [node name="CharacterSpawn" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.757522, 1.14611, 3.35199)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://character/rogue.tscn", "res://character/wizard.tscn")
 spawn_path = NodePath("../Characters")
 
 [node name="Chats" type="Node3D" parent="."]

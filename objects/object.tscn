@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c01un2xxp2mk4"]
+
+[ext_resource type="Script" path="res://objects/game_object.gd" id="1_xmdnj"]
+[ext_resource type="PackedScene" uid="uid://br1v7pxmd26o" path="res://objects/actions/pickup.tscn" id="2_42hp0"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w1ueh"]
+
+[node name="Object" type="Node3D"]
+script = ExtResource("1_xmdnj")
+object_name = "Key"
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 0, 0)
+text = "Object"
+font_size = 62
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_w1ueh")
+
+[node name="Pickup" parent="." instance=ExtResource("2_42hp0")]

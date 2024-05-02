@@ -3,8 +3,8 @@ extends Node3D
 class_name World
 
 var god_camera_scene = preload("res://teller/god_camera.tscn")
-var rogue_scene = preload("res://character/rogue.tscn")
-var wizard_scene = preload("res://character/wizard.tscn")
+var rogue_scene = preload("res://character/rogue/rogue.tscn")
+var wizard_scene = preload("res://character/wizard/wizard.tscn")
 
 @onready var spawn = $CharacterSpawn
 @onready var characters = $Characters

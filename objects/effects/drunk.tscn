@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brsl0jydftgaj"]
+
+[ext_resource type="Script" path="res://objects/effects/drunk.gd" id="1_cn1nb"]
+
+[node name="Drunk" type="Node3D"]
+script = ExtResource("1_cn1nb")

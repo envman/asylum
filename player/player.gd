@@ -9,4 +9,7 @@ class_name Player
 
 
 func get_character():
+	if character == null || character.is_empty():
+		return null
+	
 	return get_node(character)
