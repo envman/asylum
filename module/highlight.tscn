@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp7j548d3rj5i"]
+
+[ext_resource type="Script" path="res://module/highlight.gd" id="1_grie5"]
+
+[node name="Highlight" type="Node3D"]
+script = ExtResource("1_grie5")

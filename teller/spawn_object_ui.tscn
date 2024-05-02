@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx13m75a6qaeh"]
+
+[ext_resource type="Script" path="res://teller/spawn_object_ui.gd" id="1_ovj1o"]
+
+[node name="SpawnObjectUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ovj1o")
+
+[node name="ObjectsList" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 383.0
+offset_top = 143.0
+offset_right = 769.0
+offset_bottom = 505.0
+grow_horizontal = 2
+grow_vertical = 2

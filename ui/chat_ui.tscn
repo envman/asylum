@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjq5b4wj2tnqq"]
+
+[ext_resource type="Script" path="res://chat/chat_ui.gd" id="1_twpi0"]
+[ext_resource type="PackedScene" uid="uid://dxqvtd2hkyqp4" path="res://ui/list_display.tscn" id="2_jj6rv"]
+
+[node name="ChatUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_twpi0")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+offset_left = 376.0
+offset_top = 31.0
+offset_right = 776.0
+offset_bottom = 424.0
+
+[node name="MessageList" parent="Panel" instance=ExtResource("2_jj6rv")]
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 10.0
+offset_top = 6.0
+offset_right = 392.0
+offset_bottom = 385.0
+
+[node name="TextEntry" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 441.0
+offset_right = 686.0
+offset_bottom = 506.0
+placeholder_text = "Message Here"
+
+[node name="Send" type="Button" parent="."]
+layout_mode = 0
+offset_left = 693.0
+offset_top = 441.0
+offset_right = 762.0
+offset_bottom = 505.0
+text = "Send"
+
+[node name="Goodbye" type="Button" parent="."]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 516.0
+offset_right = 457.0
+offset_bottom = 547.0
+text = "Goodbye"
+
+[connection signal="pressed" from="Send" to="." method="_on_send_pressed"]
+[connection signal="pressed" from="Goodbye" to="." method="_on_goodbye_pressed"]

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cml2buuel3xdw"]
+
+[ext_resource type="Script" path="res://multiplayer/multiplayer_list.gd" id="1_82ogk"]
+
+[node name="MultiplayerList" type="Node3D"]
+script = ExtResource("1_82ogk")
+
+[node name="List" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("")
+spawn_path = NodePath("../List")

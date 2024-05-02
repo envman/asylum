@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://5w42fvdwquyl"]
+
+[ext_resource type="Script" path="res://npc/click_move/click_move_teller.gd" id="1_rfiid"]
+
+[node name="ClickMoveTeller" type="Node3D"]
+script = ExtResource("1_rfiid")

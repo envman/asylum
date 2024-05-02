@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvg34ojw0fxol"]
+
+[ext_resource type="Script" path="res://chat/chat.gd" id="1_ipsfg"]
+[ext_resource type="PackedScene" uid="uid://cml2buuel3xdw" path="res://multiplayer/multiplayer_list.tscn" id="2_26r36"]
+[ext_resource type="PackedScene" uid="uid://dhdtjykg5qlan" path="res://chat/chat_message.tscn" id="3_3ydja"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ukwx5"]
+properties/0/path = NodePath(".:player_id")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:player_path")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:ended")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:character_path")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
+[node name="Chat" type="Node3D"]
+script = ExtResource("1_ipsfg")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ukwx5")
+
+[node name="MessageList" parent="." instance=ExtResource("2_26r36")]
+child_scene = ExtResource("3_3ydja")
