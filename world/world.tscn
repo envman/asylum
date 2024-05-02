@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ltytqhigaewy"]
+[gd_scene load_steps=18 format=3 uid="uid://ltytqhigaewy"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_20wu6"]
 [ext_resource type="MeshLibrary" uid="uid://dfyyfocv75yg8" path="res://world/library.tres" id="2_6q5mq"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://chat/chat_manager.gd" id="7_jhx5u"]
 [ext_resource type="PackedScene" uid="uid://fn5f07bqinu4" path="res://character/rogue/rogue.tscn" id="9_41mn5"]
 [ext_resource type="PackedScene" uid="uid://cml2buuel3xdw" path="res://multiplayer/multiplayer_list.tscn" id="9_vihe7"]
+[ext_resource type="Script" path="res://world/character_manager.gd" id="9_xhlee"]
 [ext_resource type="PackedScene" uid="uid://cvg34ojw0fxol" path="res://chat/chat.tscn" id="10_5yrhy"]
 [ext_resource type="PackedScene" uid="uid://dfa72tn0rxwp6" path="res://objects/door.tscn" id="12_3331m"]
 
@@ -109,6 +110,7 @@ transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.5358, 2.70184, -11)
 
 [node name="Characters" type="Node3D" parent="."]
+script = ExtResource("9_xhlee")
 
 [node name="Rogue" parent="Characters" instance=ExtResource("9_41mn5")]
 hero = true

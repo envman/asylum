@@ -20,7 +20,7 @@ func _ready():
 	camera.make_current()
 	
 func _process(_delta):
-	global_position = $"..".global_position
+	global_position = parent.global_position
 
 func _input(event):
 	if freeze:

@@ -20,9 +20,9 @@ func _ready():
 				#var camera = god_camera_scene.instantiate()
 				#add_child(camera)
 			else:
-				var hero = characters.get_children().filter(func(x): return x.hero and not x.player)[0]
-				hero.hand_off.rpc(player.id)
-				hero.character_name = player.player_name
+				var hero = characters.get_free_hero()
+				hero.get_node(^"Person").hand_off.rpc(player.id)
+				hero.get_node(^"Person").character_name = player.player_name
 				#for hero in heros:
 					
 				
