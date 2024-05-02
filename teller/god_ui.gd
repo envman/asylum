@@ -92,10 +92,7 @@ func _input(event):
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 			var mouse_pos = mouse_position()
 			if mouse_pos != null:
-				print("mouse_clicked.emit")
 				mouse_clicked.emit(mouse_pos)
-			else:
-				print("mouse_pos null")
 			
 			if mode == Mode.SpawnCharacter:
 				var pos = mouse_position()
@@ -105,7 +102,6 @@ func _input(event):
 				var obj = get_clicked_object()
 				
 				if obj != null:
-					print("clicked", obj.name)
 					select(obj)
 					
 					_clear_inspectors()
@@ -113,7 +109,6 @@ func _input(event):
 					
 					for child in obj.get_children():
 						if child is Module:
-							print("Add inspector for", child.name)
 							_add_inspector(child)
 
 					mode = Mode.Editing
@@ -129,13 +124,10 @@ func _input(event):
 func select(object):
 	for child in object.get_children():
 		if not child is Module:
-			print(child.name, "Not module")
 			continue
 
-		print("found module")
 		if "teller_modules" in child:
 			for teller_module in child.teller_modules:
-				print("add teller module")
 				var mod = teller_module.instantiate()
 				mod.module = child
 				mod.camera = camera
@@ -186,7 +178,7 @@ func _on_control_pressed():
 
 
 func _on_test_pressed():
-	print("testing")
+	print("saving")
 	#for c in $/root/Main/World/Characters.get_children():
 		#print(c.name)
 		#if c.owner != null:

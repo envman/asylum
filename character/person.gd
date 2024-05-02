@@ -1,23 +1,26 @@
 extends Node3D
 
-#@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
+@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var name_label = $NameLabel
 
 var player: bool
 var character_name: String
 
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-	#print(get_path())
-	#print(sync.root_path)
-	#sync.root_path = ^"../.."
-	#print(sync.root_path)
-	#print("config", sync.replication_config)
+func _ready():
+	sync.root_path = ^"../.."
 	
-	#print(sync.replication_config.get_properties())
-	#sync.replication_config = SceneReplicationConfig.new()
-	#sync.replication_config.add_property(^"Person/NameLabel:text")
-	#sync.replication_config.property_set_replication_mode(^"Person/NameLabel:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	sync.replication_config = SceneReplicationConfig.new()
+	sync.replication_config.add_property(^"Person:character_name")
+	sync.replication_config.property_set_replication_mode(^"Person:character_name", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	
+	sync.replication_config.add_property(^"Person/NameLabel:text")
+	sync.replication_config.property_set_replication_mode(^"Person/NameLabel:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	
+	sync.replication_config.add_property(^".:position")
+	sync.replication_config.add_property(^".:rotation")
+	sync.replication_config.add_property(^".:current_animation")
+	sync.replication_config.property_set_replication_mode(^".:current_animation", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	
 	
 
 

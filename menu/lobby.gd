@@ -34,12 +34,6 @@ func _process(_delta):
 func _ready():
 	start_button.visible = multiplayer.is_server()
 
-	#MultiplayerController.player_joined.connect(_player_joined)
-	#MultiplayerController.player_left.connect(_player_left)
-	
-	#for player in MultiplayerController.players:
-		#_add_player(player.id, player.name)
-
 func _player_joined(_id, _name):
 	pass
 

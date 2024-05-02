@@ -22,7 +22,7 @@ func _ready():
 			else:
 				var hero = characters.get_children().filter(func(x): return x.hero and not x.player)[0]
 				hero.hand_off.rpc(player.id)
-				hero.character_name = player.name
+				hero.character_name = player.player_name
 				#for hero in heros:
 					
 				

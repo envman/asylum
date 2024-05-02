@@ -17,5 +17,19 @@ func _physics_process(_delta):
 	
 	global_position.x += direction.x * 0.5
 	global_position.z += direction.z * 0.5
-	#velocity.x = player.direction.x * player.SPEED
-	#velocity.z = player.direction.z * player.SPEED
+	
+	if Input.is_action_pressed("rotate_right"):
+		rotation_degrees.y -= 2
+		
+	if Input.is_action_pressed("rotate_left"):
+		rotation_degrees.y += 2
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			global_position.y += 0.1
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			global_position.y -= 0.1
+	
+	if event is InputEventPanGesture:
+		global_position.y += event.delta.y

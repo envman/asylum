@@ -26,7 +26,6 @@ static func setup_objects(multiplayer_spawner: MultiplayerSpawner):
 			var obj = obj_scene.instantiate()
 			
 			if GameObject.is_game_object(obj):
-				print("add spawnable", path)
 				multiplayer_spawner.add_spawnable_scene(path)
 
 		file_name = dir.get_next()
@@ -37,9 +36,7 @@ static func setup_objects(multiplayer_spawner: MultiplayerSpawner):
 @onready var label = $Label3D
 
 func _ready():
-	print("GAME OBJECT")
 	sync.root_path = ^"../.."
-	#sync.root_path = get_parent().get_path()
 	
 	var config: SceneReplicationConfig = sync.replication_config
 	config.add_property(^".:position")
@@ -50,8 +47,5 @@ func _ready():
 	label.text = object_name
 	if get_parent().get_node(^"Model") != null:
 		label.visible = false
-	#print(sync.root_path)
-	#print(sync.replication_config.get_properties())
-	
 	
 	

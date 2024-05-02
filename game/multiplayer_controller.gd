@@ -25,13 +25,10 @@ func _peer_connected(id: int):
 	_log("Player Connected: " + str(id))
 	if multiplayer.is_server():
 		pass
-		#_send_players()
 
 func _peer_disconnected(id: int):
 	_log("Player Disconnected: " + str(id))
 	player_left.emit(id)
-	#if multiplayer.is_server():
-		
 
 func _connected_to_server():
 	_log("Connected to server")

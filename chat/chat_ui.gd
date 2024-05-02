@@ -23,5 +23,4 @@ func _on_goodbye_pressed():
 
 	if chat.player_path != null:
 		var player = get_node(chat.player_path)
-		print(player)
 		player.change_state("idle")

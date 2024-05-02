@@ -27,7 +27,6 @@ func setup_objects(folder: String, is_valid: Callable):
 			var obj = obj_scene.instantiate()
 			
 			if is_valid.call(obj):
-				print("add spawnable", path)
 				spawner.add_spawnable_scene(path)
 
 		file_name = dir.get_next()

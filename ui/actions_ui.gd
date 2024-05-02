@@ -17,7 +17,6 @@ func _update_colors():
 		label.add_theme_color_override("font_color", Color.WHITE)
 
 func _ready():
-	print("ACTION UI READY")
 	_update_colors()
 
 func _enter_tree():
@@ -27,7 +26,6 @@ func _exit_tree():
 	UI.focus = false
 
 func add_action(action: Action):
-	print("ADD ACTION")
 	actions.append(action)
 	var label = Label.new()
 	label.text = action.action_name
