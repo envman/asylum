@@ -1,18 +1,49 @@
 extends Node
 class_name Effect
 
-static func is_effect(obj: Node3D):
-	for child in obj.get_children():
-		if child is Effect:
-			return true
+static func is_effect(obj: Node):
+	if obj is Effect:
+		return true
 			
 	return false
 
-# Called when the node enters the scene tree for the first time.
+var active := false
+var local := false
+
+var character: Character
+var character_module: CharacterModule
+
 func _ready():
-	pass # Replace with function body.
+	if get_parent().get_parent() is CharacterModule:
+		active = true
+		character_module = get_parent().get_parent()
+		
+		if character_module.player:
+			local = true
+			
+		character = character_module.get_parent()
+		
+		
+		client_start(local)
 
+		if multiplayer.is_server():
+			server_start()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func client_start(local: bool):
+	pass
+
+func server_start():
+	pass
+
 func _process(delta):
+	if active:
+		client_process(local, delta)
+	
+	if multiplayer.is_server():
+		server_process(delta)
+
+func client_process(local, delta):
+	pass
+
+func server_process(delta):
 	pass

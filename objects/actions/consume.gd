@@ -11,4 +11,13 @@ func _process(delta):
 	pass
 
 func consume(player):
-	pass
+	if not multiplayer.is_server():
+		return
+	
+	for effect in get_children():
+		if effect is Effect:
+			var character = player.get_character()
+			var spawner = character.get_node(^"Person/Spawner")
+			spawner.add(effect)
+			
+			#spawner.spawn(effect.scene_file_path)

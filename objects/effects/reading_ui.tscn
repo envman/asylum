@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm6inw3iots4o"]
+
+[ext_resource type="Script" path="res://objects/effects/reading_ui.gd" id="1_70r21"]
+
+[node name="ReadingUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_70r21")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 42.0
+offset_right = 996.0
+offset_bottom = 610.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 64.0
+offset_right = 665.0
+offset_bottom = 476.0
+text = "Testing text"

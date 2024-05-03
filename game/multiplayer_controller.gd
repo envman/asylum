@@ -75,4 +75,6 @@ func get_players():
 	return players.get_children()
 
 func get_player(id: int):
-	return players.get_children().filter(func(x): return x.id == id)[0]
+	var all = players.get_children().filter(func(x): return x.id == id)
+	if all.size() == 1:
+		return all[0]

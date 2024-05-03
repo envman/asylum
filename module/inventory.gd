@@ -19,6 +19,13 @@ func has_named_item(item_name: String):
 	
 	return false
 
+#func _process(delta):
+	#Log.log(str(get_multiplayer_authority()))
+
+func pickup(obj):
+	var mine = load(obj.scene_file_path).instantiate()
+	add_child(mine)
+
 @rpc("any_peer", "reliable")
 func spawn(path):
 	var scene = load(path)

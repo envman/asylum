@@ -10,7 +10,8 @@ func _init():
 		"attack": AttackState,
 		"move": MoveState,
 		"jump": JumpState,
-		"chat": ChatState
+		"chat": ChatState,
+		"lie": LieState
 	}
 
 

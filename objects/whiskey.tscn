@@ -61,6 +61,9 @@ skeleton = NodePath("")
 [node name="Object" parent="." instance=ExtResource("2_iogve")]
 object_name = "Whiskey"
 
-[node name="Consume" parent="Object" instance=ExtResource("3_l5pmc")]
+[node name="Consume" parent="Object" node_paths=PackedStringArray("object") instance=ExtResource("3_l5pmc")]
+action_name = "Consume"
+object = NodePath(".")
+method = "consume"
 
 [node name="Drunk" parent="Object/Consume" instance=ExtResource("4_lv4kl")]

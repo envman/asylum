@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://d37sa6qyh47vo"]
+
+[ext_resource type="Script" path="res://character/person.gd" id="1_u3nae"]
+[ext_resource type="Script" path="res://character/selector.gd" id="2_0vmqf"]
+[ext_resource type="Script" path="res://module/inventory.gd" id="3_w6umj"]
+[ext_resource type="PackedScene" uid="uid://gr3la5rf2klh" path="res://multiplayer/spawner.tscn" id="4_2rg0r"]
+
+[node name="Person" type="Node3D"]
+script = ExtResource("1_u3nae")
+
+[node name="NameLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.40256, 0)
+billboard = 1
+text = "PLAYER FLERPITY THE FIRST"
+font_size = 60
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+
+[node name="Selector" type="Node3D" parent="."]
+script = ExtResource("2_0vmqf")
+
+[node name="RayCast3D" type="RayCast3D" parent="Selector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57571, -0.659095)
+target_position = Vector3(2.08165e-12, 2.08165e-12, -2)
+collision_mask = 3
+
+[node name="Inventory" type="Node3D" parent="."]
+visible = false
+script = ExtResource("3_w6umj")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Inventory"]
+
+[node name="Spawner" parent="." instance=ExtResource("4_2rg0r")]
+effects = true

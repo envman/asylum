@@ -1,4 +1,5 @@
 extends Node3D
+class_name CharacterModule
 
 var camera_controller_scene = preload("res://character/camera/camera_controller.tscn")
 
@@ -44,9 +45,7 @@ func _ready():
 	state_factory = StateFactory.new()
 	change_state("idle")
 	
-func _process(_delta):
-	character_name = get_parent().character_name
-	
+func _process(_delta):	
 	name_label.visible = !player
 	name_label.text = character_name
 
@@ -67,16 +66,27 @@ func accept_player():
 	camera = cam
 	player = true
 
+@rpc("authority", "call_local", "reliable")
+func release_player():
+	remove_child(camera)
+	camera = null
+	player = false
+
 @rpc("call_local", "reliable")
 func hand_off(id):
 	get_parent().set_multiplayer_authority(id)
+	for child in get_children():
+		if child is Module or child is Spawner:
+			child.set_multiplayer_authority(1)
+	
 	var local_player = MultiplayerController.get_local_player()
-	local_player.character = get_parent().get_path()
-	print("character set to", local_player.character)
+	var owning_player = MultiplayerController.get_player(id)
+	owning_player.character = get_parent().get_path()
 	
 	if local_player.id == id and not local_player.teller:
 		accept_player()
 		name_label.text = local_player.player_name
+		character_name = local_player.player_name
 
 var state_name: String
 
@@ -84,6 +94,7 @@ func _on_animation_tree_animation_finished(anim_name):
 	state.animation_finished(anim_name)
 
 func change_state(new_state_name):
+	#print("change_state: ", new_state_name)
 	if state != null:
 		state.exit()
 		state.queue_free()

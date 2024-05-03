@@ -15,23 +15,10 @@ func _ready():
 	
 	if multiplayer.is_server():
 		for player in MultiplayerController.get_players():
-			if player.teller:
-				pass
-				#var camera = god_camera_scene.instantiate()
-				#add_child(camera)
-			else:
+			if not player.teller:
 				var hero = characters.get_free_hero()
 				hero.get_node(^"Person").hand_off.rpc(player.id)
 				hero.get_node(^"Person").character_name = player.player_name
-				#for hero in heros:
-					
-				
-				
-				#var rogue = rogue_scene.instantiate()
-				#rogue.name = str(player.id)
-				#rogue.global_position = spawn.global_position
-				#characters.add_child(rogue)
-				#rogue.hand_off.rpc(player.id)
 		
 	if MultiplayerController.get_local_player().teller:
 		var camera = god_camera_scene.instantiate()

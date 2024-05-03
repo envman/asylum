@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dk1d1bsahqc3w"]
+
+[ext_resource type="Script" path="res://objects/letter.gd" id="1_v7urf"]
+[ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="1_xu5nt"]
+[ext_resource type="PackedScene" uid="uid://cu87f0ms7ui3q" path="res://objects/actions/consume.tscn" id="3_n623f"]
+[ext_resource type="PackedScene" uid="uid://b1dayalbvhjv7" path="res://objects/effects/reading.tscn" id="4_jeflk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7366d"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i2c30"]
+properties/0/path = NodePath(".:text")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Letter" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_v7urf")
+text = "Default Text"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("BoxShape3D_7366d")
+
+[node name="Object" parent="." instance=ExtResource("1_xu5nt")]
+object_name = "Letter"
+
+[node name="Consume" parent="Object" node_paths=PackedStringArray("object") instance=ExtResource("3_n623f")]
+action_name = "Read"
+object = NodePath(".")
+method = "consume"
+
+[node name="Reading" parent="Object/Consume" instance=ExtResource("4_jeflk")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_i2c30")

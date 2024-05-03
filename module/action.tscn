@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" path="res://module/action.gd" id="1_16y2s"]
 
-[node name="Action" type="Node3D" node_paths=PackedStringArray("object")]
+[node name="Action" type="Node3D"]
 script = ExtResource("1_16y2s")
 action_name = "Open"
-object = NodePath("")
 method = "toggle_open"

@@ -1,10 +1,20 @@
 extends Camera3D
 
 var freeze = false
+var ui_level = 0
+
+@onready var level_container = $/root/Main/World/NavigationRegion
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	change_ui_level(0)
 
+func change_ui_level(level):
+	for n in level_container.get_child_count():
+		level_container.get_child(n).visible = n <= level
+	
+	ui_level = level
 
 func _physics_process(_delta):
 	if freeze:
@@ -21,6 +31,12 @@ func _physics_process(_delta):
 		
 	if Input.is_action_pressed("rotate_left"):
 		rotation_degrees.y += 2
+		
+	if Input.is_action_just_pressed("action_next"):
+		change_ui_level(ui_level + 1)
+
+	if Input.is_action_just_pressed("action_last"):
+		change_ui_level(ui_level - 1)	
 
 func _input(event):
 	if event is InputEventMouseButton:

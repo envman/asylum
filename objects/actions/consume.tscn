@@ -2,8 +2,5 @@
 
 [ext_resource type="Script" path="res://objects/actions/consume.gd" id="1_afqej"]
 
-[node name="Consume" type="Node3D" node_paths=PackedStringArray("object")]
+[node name="Consume" type="Node3D"]
 script = ExtResource("1_afqej")
-action_name = "Consume"
-object = NodePath(".")
-method = "consume"

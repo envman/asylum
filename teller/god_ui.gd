@@ -28,7 +28,21 @@ enum Mode {
 	Editing,
 	Chatting,
 	SpawnObject,
+	Controlling,
 }
+
+var layers_masks = [
+	0b00000000_00000000_00000011_11111111,
+	0b00000000_00000000_00000111_11111111,
+	0b00000000_00000000_00001111_11111111,
+	0b00000000_00000000_00011111_11111111,
+	0b00000000_00000000_00111111_11111111,
+	0b00000000_00000000_01111111_11111111,
+	0b00000000_00000000_11111111_11111111,
+	0b00000000_00000001_11111111_11111111,
+	0b00000000_00000011_11111111_11111111,
+	0b00000000_00000111_11111111_11111111,
+]
 
 var mode: Mode = Mode.Select
 var last_mode: Mode
@@ -51,8 +65,17 @@ func _ready():
 
 func _process(_delta):
 	control.visible = selected != null and selected is Character
+	if control.visible:
+		pass
 	
 	if Input.is_action_just_pressed("leave"):
+		if mode == Mode.Controlling:
+			visible = true
+			selected.get_node(^"Person").release_player()
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_parent().global_position = selected.global_position
+			get_parent().global_position.y += 20
+		
 		selected = null
 		object_inspector.set_object(null)
 		mode = Mode.Select
@@ -122,6 +145,8 @@ func _input(event):
 			mode = Mode.Select
 
 func select(object):
+	selected = object
+	
 	for child in object.get_children():
 		if not child is Module:
 			continue
@@ -144,6 +169,9 @@ func get_clicked_object():
 	var ray_query = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
+	print("layer", camera.ui_level)
+	print("mask", layers_masks[camera.ui_level])
+	ray_query.collision_mask = layers_masks[camera.ui_level]
 	ray_query.collide_with_areas = true
 	var raycast_result = space.intersect_ray(ray_query)
 	
@@ -162,6 +190,7 @@ func mouse_position():
 	var ray_query = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
+	ray_query.collision_mask = layers_masks[camera.ui_level]
 	ray_query.collide_with_areas = true
 	var raycast_result = space.intersect_ray(ray_query)
 	
@@ -171,11 +200,11 @@ func mouse_position():
 func _on_character_pressed():
 	mode = Mode.SpawnCharacter
 
-
 func _on_control_pressed():
 	if selected != null and selected is Character:
-		selected.accept_player()
-
+		selected.get_node(^"Person").accept_player()
+		visible = false
+		mode = Mode.Controlling
 
 func _on_test_pressed():
 	print("saving")

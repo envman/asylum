@@ -13,6 +13,9 @@ signal name_updated
 
 @rpc("any_peer", "call_local", "reliable")
 func act():
+	if not multiplayer.is_server():
+		return
+	
 	var player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 	
 	object.call(method, player)
