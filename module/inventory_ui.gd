@@ -3,11 +3,18 @@ extends Control
 @onready var item_list = $ItemList
 @onready var action_list = $ActionList
 
+@onready var add_item = $AddItem
+
+var spawn_object_ui_scene = preload("res://teller/spawn_object_ui.tscn")
+
 var inventory: Inventory
 
 signal done
 
 func _ready():
+	var player = MultiplayerController.get_local_player()
+	add_item.visible = player.teller
+	
 	for item in inventory.get_children():
 		if GameObject.is_game_object(item):
 			var object: GameObject = GameObject.object(item)
@@ -38,3 +45,12 @@ func clear_actions():
 
 func _process(delta):
 	pass
+
+
+func _on_add_item_pressed():
+	var spawn_object_ui = spawn_object_ui_scene.instantiate()
+	spawn_object_ui.object_selected.connect(func(x):
+		inventory.pickup(x)
+		remove_child(spawn_object_ui)
+	)
+	add_child(spawn_object_ui)

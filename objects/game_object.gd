@@ -47,5 +47,11 @@ func _ready():
 	label.text = object_name
 	if get_parent().get_node(^"Model") != null:
 		label.visible = false
+		
+	var inventory = get_parent().get_parent()
+	if inventory is Inventory:
+		var collision: CollisionShape3D = get_parent().get_node("CollisionShape3D")
+		if collision != null:
+			collision.disabled = true
 	
 	

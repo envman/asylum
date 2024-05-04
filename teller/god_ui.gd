@@ -16,12 +16,14 @@ extends Control
 @onready var control = $Buttons/Control
 @onready var add_effect = $Buttons/AddEffect
 @onready var inspectors = $Inspectors
+@onready var inventory = $Buttons/Inventory
 
 signal mouse_clicked
 
 var chat_ui_scene = preload("res://ui/chat_ui.tscn")
 var spawn_object_ui_scene: PackedScene = preload("res://teller/spawn_object_ui.tscn")
 var add_effect_ui_scene = preload("res://teller/add_effect_ui.tscn")
+#var inventory_ui_scene = preload("res://module/inventory_ui.tscn")
 
 enum Mode {
 	Select,
@@ -51,6 +53,7 @@ var last_mode: Mode
 var selected
 var spawn_object_ui
 var add_effect_ui
+var inventory_ui
 
 func _ready():
 	tellers.get_items = players.get_tellers
@@ -69,6 +72,7 @@ func _ready():
 func _process(_delta):
 	control.visible = selected != null and selected is Character
 	add_effect.visible = selected != null and selected is Character
+	inventory.visible = selected != null and selected is Character
 	#if control.visible:
 		#pass
 	
@@ -83,6 +87,8 @@ func _process(_delta):
 		selected = null
 		object_inspector.set_object(null)
 		mode = Mode.Select
+		if inventory_ui != null:
+			remove_child(inventory_ui)
 		
 	if mode != last_mode:
 		if mode != Mode.Editing:
@@ -149,6 +155,7 @@ func _input(event):
 			mode = Mode.Select
 
 func select(object):
+	print("select: ", object.name)
 	selected = object
 	
 	for child in object.get_children():
@@ -222,8 +229,10 @@ func _on_test_pressed():
 
 func _remove_spawn_object_ui():
 	if spawn_object_ui != null:
+		print(spawn_object_ui.name)
 		mouse_clicked.disconnect(spawn_object_ui.mouse_clicked)
 		remove_child(spawn_object_ui)
+		spawn_object_ui = null
 
 func _on_spawn_object_pressed():
 	mode = Mode.SpawnObject
@@ -236,3 +245,13 @@ func _on_add_effect_pressed():
 	add_effect_ui = add_effect_ui_scene.instantiate()
 	add_effect_ui.character = selected
 	add_child(add_effect_ui)
+
+
+func _on_inventory_pressed():
+	var inventory = selected.get_node(^"Person/Inventory")
+	if inventory != null:
+		inventory_ui = inventory.view()
+		add_child(inventory_ui)
+	#inventory_ui = inventory_ui_scene.instantiate()
+	#inventory_ui.inventory = 
+	#add_child(inventory_ui)

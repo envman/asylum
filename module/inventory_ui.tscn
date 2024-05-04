@@ -37,3 +37,13 @@ offset_left = 434.0
 offset_top = 80.0
 offset_right = 694.0
 offset_bottom = 522.0
+
+[node name="AddItem" type="Button" parent="."]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 558.0
+offset_right = 222.0
+offset_bottom = 589.0
+text = "Add Item"
+
+[connection signal="pressed" from="AddItem" to="." method="_on_add_item_pressed"]

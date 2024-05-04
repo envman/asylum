@@ -6,6 +6,8 @@ extends Control
 var objects := []
 var spawning
 
+signal object_selected
+
 func _ready():
 	_load_objects()
 	
@@ -33,7 +35,9 @@ func _add_object(obj):
 	button.pressed.connect(func():
 		var scene = load(obj.path)
 		spawning = scene.instantiate()
+		object_selected.emit(spawning)
 	)
+	
 	objects_list.add_child(button)
 
 func mouse_clicked(pos):
