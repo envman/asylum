@@ -39,7 +39,7 @@ func add_ui(obj):
 func remove_ui():
 	get_parent().remove_child(action_ui)
 	action_ui = null
-	
+
 func _physics_process(_delta):
 	if get_multiplayer_authority() != multiplayer.get_unique_id():
 		return

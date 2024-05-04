@@ -9,6 +9,8 @@ var wizard_scene = preload("res://character/wizard/wizard.tscn")
 @onready var spawn = $CharacterSpawn
 @onready var characters = $Characters
 @onready var objects_spawner = $ObjectsSpawner
+@onready var objects = $Objects
+@onready var navigation_region = $NavigationRegion
 
 func _ready():
 	GameObject.setup_objects(objects_spawner)
@@ -23,6 +25,9 @@ func _ready():
 	if MultiplayerController.get_local_player().teller:
 		var camera = god_camera_scene.instantiate()
 		add_child(camera)
+	else:
+		for level in navigation_region.get_children():
+			level.visible = true
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_character(pos: Vector3):

@@ -27,9 +27,6 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("test"):
 		player_module.change_state("lie")
 	
-	#if player.looking_at is Character and not last_state == "chat":
-		#player_module.change_state("chat")
-	
 
 func exit():
 	pass

@@ -24,6 +24,8 @@ var state: State
 var animation_tree: AnimationTree
 var playback
 
+var child_ui
+
 func _ready():
 	sync.root_path = ^"../.."
 	
@@ -36,6 +38,7 @@ func _ready():
 	
 	sync.replication_config.add_property(^".:position")
 	sync.replication_config.add_property(^".:rotation")
+	sync.replication_config.add_property(^".:scale")
 	sync.replication_config.add_property(^"Person:current_animation")
 	sync.replication_config.property_set_replication_mode(^"Person:current_animation", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
 	
@@ -49,7 +52,35 @@ func _process(_delta):
 	name_label.visible = !player
 	name_label.text = character_name
 
+	if child_ui != null:
+		if Input.is_action_just_pressed("leave"):
+			remove_child_ui()
+		return
+
+	if player:
+		if Input.is_action_pressed("crawl"):
+			get_parent().scale.y = .5
+		else:
+			get_parent().scale.y = 1
+			
+		if Input.is_action_just_pressed("inventory"):
+			child_ui = get_node(^"Inventory").view()
+			add_child(child_ui)
+			camera.freeze = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			if "done" in child_ui:
+				child_ui.done.connect(remove_child_ui)
+
+func remove_child_ui():
+	remove_child(child_ui)
+	child_ui = null
+	camera.freeze = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 func _physics_process(delta):
+	if child_ui != null:
+		return
+		
 	if not get_parent().is_on_floor():
 		get_parent().velocity.y -= gravity * delta
 		
@@ -93,8 +124,8 @@ var state_name: String
 func _on_animation_tree_animation_finished(anim_name):
 	state.animation_finished(anim_name)
 
+@rpc("any_peer", "call_local", "reliable")
 func change_state(new_state_name):
-	#print("change_state: ", new_state_name)
 	if state != null:
 		state.exit()
 		state.queue_free()
@@ -107,5 +138,5 @@ func change_state(new_state_name):
 	add_child(state)
 
 func set_animation(animation_name):
-	if player:
+	if player or (multiplayer.is_server() and get_multiplayer_authority() == 1):
 		current_animation = animation_name

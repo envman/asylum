@@ -6,6 +6,7 @@ class_name LieState
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_module.set_animation("Lie")
+	player_module.get_node(^"Selector").remove_ui()
 	#time = 10
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

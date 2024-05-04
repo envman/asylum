@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://belvft3sn7cmq"]
+
+[ext_resource type="Script" path="res://teller/add_effect_ui.gd" id="1_gbtta"]
+
+[node name="AddEffectUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gbtta")
+
+[node name="EffectList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 480.0
+offset_right = 764.0
+offset_bottom = 644.0

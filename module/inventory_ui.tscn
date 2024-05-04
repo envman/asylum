@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://cou5n8qornme7"]
+
+[ext_resource type="Script" path="res://module/inventory_ui.gd" id="1_4yx2q"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4yx2q")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 650.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 24.0
+offset_right = 131.0
+offset_bottom = 47.0
+text = "Inventory"
+
+[node name="ItemList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 80.0
+offset_right = 398.0
+offset_bottom = 522.0
+
+[node name="ActionList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 434.0
+offset_top = 80.0
+offset_right = 694.0
+offset_bottom = 522.0

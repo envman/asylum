@@ -6,5 +6,5 @@ class_name Character
 @export var character_name: String = "Character"
 
 func _ready():
-	# spawn character module/Person
 	pass
+

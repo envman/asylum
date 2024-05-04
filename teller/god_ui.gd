@@ -14,12 +14,14 @@ extends Control
 @onready var heros = $Heros
 @onready var chats = $Chats
 @onready var control = $Buttons/Control
+@onready var add_effect = $Buttons/AddEffect
 @onready var inspectors = $Inspectors
 
 signal mouse_clicked
 
 var chat_ui_scene = preload("res://ui/chat_ui.tscn")
 var spawn_object_ui_scene: PackedScene = preload("res://teller/spawn_object_ui.tscn")
+var add_effect_ui_scene = preload("res://teller/add_effect_ui.tscn")
 
 enum Mode {
 	Select,
@@ -48,6 +50,7 @@ var mode: Mode = Mode.Select
 var last_mode: Mode
 var selected
 var spawn_object_ui
+var add_effect_ui
 
 func _ready():
 	tellers.get_items = players.get_tellers
@@ -65,8 +68,9 @@ func _ready():
 
 func _process(_delta):
 	control.visible = selected != null and selected is Character
-	if control.visible:
-		pass
+	add_effect.visible = selected != null and selected is Character
+	#if control.visible:
+		#pass
 	
 	if Input.is_action_just_pressed("leave"):
 		if mode == Mode.Controlling:
@@ -169,8 +173,6 @@ func get_clicked_object():
 	var ray_query = PhysicsRayQueryParameters3D.new()
 	ray_query.from = from
 	ray_query.to = to
-	print("layer", camera.ui_level)
-	print("mask", layers_masks[camera.ui_level])
 	ray_query.collision_mask = layers_masks[camera.ui_level]
 	ray_query.collide_with_areas = true
 	var raycast_result = space.intersect_ray(ray_query)
@@ -221,7 +223,7 @@ func _on_test_pressed():
 func _remove_spawn_object_ui():
 	if spawn_object_ui != null:
 		mouse_clicked.disconnect(spawn_object_ui.mouse_clicked)
-	remove_child(spawn_object_ui)
+		remove_child(spawn_object_ui)
 
 func _on_spawn_object_pressed():
 	mode = Mode.SpawnObject
@@ -229,5 +231,8 @@ func _on_spawn_object_pressed():
 	mouse_clicked.connect(spawn_object_ui.mouse_clicked)
 	
 	add_child(spawn_object_ui)
-	
-	
+
+func _on_add_effect_pressed():
+	add_effect_ui = add_effect_ui_scene.instantiate()
+	add_effect_ui.character = selected
+	add_child(add_effect_ui)

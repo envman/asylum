@@ -13,20 +13,11 @@ func _ready():
 
 func add(obj):
 	var copy = load(obj.scene_file_path).instantiate()
-	add_child(copy)
-
-#func spawn(res_path):
-	#var owner_id = get_multiplayer_authority()
-	#spawn_local.rpc_id(owner_id, res_path)
-#
-#@rpc("any_peer", "call_local", "reliable")
-#func spawn_local(res_path):
-	#var obj = load(res_path).instantiate()
-	#get_parent().get_parent().add_child(obj)
+		
+	add_child(copy, true)
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	#pass
+	if "copy_to" in obj:
+		obj.copy_to(copy)
 
 func setup_objects(folder: String, is_valid: Callable):
 	var dir := DirAccess.open(folder)
@@ -40,7 +31,6 @@ func setup_objects(folder: String, is_valid: Callable):
 			var obj = obj_scene.instantiate()
 			
 			if is_valid.call(obj):
-				print("add object", path)
 				spawner.add_spawnable_scene(path)
 
 		file_name = dir.get_next()

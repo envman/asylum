@@ -89,7 +89,12 @@ text = "Assume Direct Control"
 layout_mode = 2
 text = "Save"
 
+[node name="AddEffect" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Add Effect"
+
 [connection signal="pressed" from="Buttons/Character" to="." method="_on_character_pressed"]
 [connection signal="pressed" from="Buttons/SpawnObject" to="." method="_on_spawn_object_pressed"]
 [connection signal="pressed" from="Buttons/Control" to="." method="_on_control_pressed"]
 [connection signal="pressed" from="Buttons/Save" to="." method="_on_test_pressed"]
+[connection signal="pressed" from="Buttons/AddEffect" to="." method="_on_add_effect_pressed"]

@@ -11,7 +11,7 @@ func _init():
 		"move": MoveState,
 		"jump": JumpState,
 		"chat": ChatState,
-		"lie": LieState
+		"lie": LieState,
 	}
 
 

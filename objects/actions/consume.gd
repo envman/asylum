@@ -19,5 +19,3 @@ func consume(player):
 			var character = player.get_character()
 			var spawner = character.get_node(^"Person/Spawner")
 			spawner.add(effect)
-			
-			#spawner.spawn(effect.scene_file_path)

@@ -1,21 +1,21 @@
 extends Node
 class_name GameObject
 
-static func is_game_object(obj: Node3D):
+static func is_game_object(obj: Node) -> bool:
 	for child in obj.get_children():
 		if child is GameObject:
 			return true
 			
 	return false
 
-static func object(obj: Node3D):
+static func object(obj: Node) -> GameObject:
 	for child in obj.get_children():
 		if child is GameObject:
 			return child
 	
 	return null
 
-static func setup_objects(multiplayer_spawner: MultiplayerSpawner):
+static func setup_objects(multiplayer_spawner: MultiplayerSpawner) -> void:
 	var dir := DirAccess.open("res://objects")
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
