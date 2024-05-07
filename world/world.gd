@@ -22,8 +22,8 @@ func _ready():
 			if not player.teller:
 				#var hero = characters.get_free_hero()
 				var hero = free_characters.pop_front()
-				hero.get_node(^"Person").hand_off.rpc(player.id)
-				hero.get_node(^"Person").character_name = player.player_name
+				hero.get_node(^"CharacterModule").hand_off.rpc(player.id)
+				hero.get_node(^"CharacterModule").character_name = player.player_name
 		
 	if MultiplayerController.get_local_player().teller:
 		var camera = god_camera_scene.instantiate()

@@ -14,9 +14,9 @@ func act():
 	
 	var player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 	var character = player.get_character()
-	var person = character.get_node(^"Person")
+	var character_module = character.get_node(^"CharacterModule")
 	
-	var modules = person.get_children().filter(func(x): return x is Inventory)
+	var modules = character_module.get_children().filter(func(x): return x is Inventory)
 	if modules.size() == 1:
 		var inventory = modules[0]
 		var obj = get_parent().get_parent()

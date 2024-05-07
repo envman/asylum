@@ -26,5 +26,5 @@ func _process(delta):
 
 
 func _on_apply_pressed():
-	var spawner = character.get_node(^"Person").get_node(^"Spawner")
+	var spawner = character.get_node(^"CharacterModule").get_node(^"Spawner")
 	spawner.add(spawning)

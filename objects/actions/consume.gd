@@ -18,5 +18,5 @@ func consume(player):
 	for effect in get_children():
 		if effect is Effect:
 			var character = player.get_character()
-			var spawner = character.get_node(^"Person/Spawner")
+			var spawner = character.get_node(^"CharacterModule/Spawner")
 			spawner.add(effect)

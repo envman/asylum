@@ -31,17 +31,17 @@ func _ready():
 	sync.root_path = ^"../.."
 	
 	sync.replication_config = SceneReplicationConfig.new()
-	sync.replication_config.add_property(^"Person:character_name")
-	sync.replication_config.property_set_replication_mode(^"Person:character_name", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	sync.replication_config.add_property(^"CharacterModule:character_name")
+	sync.replication_config.property_set_replication_mode(^"CharacterModule:character_name", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
 	
-	sync.replication_config.add_property(^"Person/NameLabel:text")
-	sync.replication_config.property_set_replication_mode(^"Person/NameLabel:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	sync.replication_config.add_property(^"CharacterModule/NameLabel:text")
+	sync.replication_config.property_set_replication_mode(^"CharacterModule/NameLabel:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
 	
 	sync.replication_config.add_property(^".:position")
 	sync.replication_config.add_property(^".:rotation")
 	sync.replication_config.add_property(^".:scale")
-	sync.replication_config.add_property(^"Person:current_animation")
-	sync.replication_config.property_set_replication_mode(^"Person:current_animation", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	sync.replication_config.add_property(^"CharacterModule:current_animation")
+	sync.replication_config.property_set_replication_mode(^"CharacterModule:current_animation", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
 	
 	animation_tree = get_parent().get_node(^"AnimationTree")
 	playback = animation_tree.get("parameters/playback")

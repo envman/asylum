@@ -45,13 +45,3 @@ func in_inventory() -> bool:
 		return false
 	
 	return inventory is Inventory
-	
-	
-	#var person = character.get_node(^"Person")
-#
-	#var inventories = person.get_children().filter(func(x): return x is Inventory)
-	#if inventories.size() < 1:
-		#return false
-		#
-	#var inventory = inventories[0]
-	#return inventory.has_named_item("Key")

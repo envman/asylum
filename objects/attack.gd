@@ -26,14 +26,8 @@ func hit(player):
 		return
 	
 	var character = _get_character()
-	#var character_module = character.get_node(^"Person")
-	#
-	#var targeter = character_module.get_node(^"Targeter")
-	#if targeter == null or targeter.target == null:
-		#print("miss")
-		#return
 	
-	var spawner = target.get_node(^"Person/Spawner")
+	var spawner = target.get_node(^"CharacterModule/Spawner")
 	if spawner == null:
 		print("no spawner")
 		return

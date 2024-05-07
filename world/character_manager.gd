@@ -20,6 +20,6 @@ func filter_hero(character):
 	return character.hero
 
 func filter_free(character):
-	var character_module = character.get_node(^"Person")
+	var character_module = character.get_node(^"CharacterModule")
 	print("character: " + character.name + "  is free: " + str(character_module.player))
 	return !character_module.player

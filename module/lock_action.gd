@@ -8,9 +8,9 @@ func _ready():
 	get_parent().state_changed.connect(_state_changed)
 
 func _has_key(character):
-	var person = character.get_node(^"Person")
+	var character_module = character.get_node(^"CharacterModule")
 
-	var inventories = person.get_children().filter(func(x): return x is Inventory)
+	var inventories = character_module.get_children().filter(func(x): return x is Inventory)
 	if inventories.size() < 1:
 		return false
 		

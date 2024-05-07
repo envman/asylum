@@ -88,7 +88,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("leave"):
 		if mode == Mode.Controlling:
 			visible = true
-			selected.get_node(^"Person").release_player(MultiplayerController.get_local_player().id)
+			selected.get_node(^"CharacterModule").release_player(MultiplayerController.get_local_player().id)
 			get_parent().make_current()
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_parent().global_position = selected.global_position
@@ -221,7 +221,7 @@ func _on_character_pressed():
 
 func _on_control_pressed():
 	if selected != null and selected is Character:
-		selected.get_node(^"Person").accept_player(MultiplayerController.get_local_player().id)
+		selected.get_node(^"CharacterModule").accept_player(MultiplayerController.get_local_player().id)
 		visible = false
 		mode = Mode.Controlling
 
@@ -258,7 +258,7 @@ func _on_add_effect_pressed():
 
 
 func _on_inventory_pressed():
-	var inventory = selected.get_node(^"Person/Inventory")
+	var inventory = selected.get_node(^"CharacterModule/Inventory")
 	if inventory != null:
 		inventory_ui = inventory.view()
 		add_child(inventory_ui)
