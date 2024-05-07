@@ -1,9 +1,12 @@
 extends Control
 
 @onready var effect_list = $EffectList
+@onready var object_inspector = $ObjectInspector
 
 var effects
 var character
+
+var spawning
 
 func _ready():
 	effects = Load.effects()
@@ -12,11 +15,16 @@ func _ready():
 		var button = Button.new()
 		button.text = effect.name
 		button.pressed.connect(func():
-			var spawner = character.get_node(^"Person").get_node(^"Spawner")
-			spawner.add(effect)
+			spawning = effect
+			object_inspector.set_object(spawning)
 		)
 		effect_list.add_child(button)
 
 func _process(delta):
 	if Input.is_action_just_pressed("leave"):
 		queue_free()
+
+
+func _on_apply_pressed():
+	var spawner = character.get_node(^"Person").get_node(^"Spawner")
+	spawner.add(spawning)

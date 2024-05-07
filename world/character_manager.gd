@@ -7,6 +7,12 @@ func get_free_hero():
 	if free.size() > 0:
 		return free[0]
 
+func get_free_heros():
+	var heros = get_heros()
+	var free = heros.filter(filter_free)
+	
+	return free
+
 func get_heros():
 	return get_children().filter(filter_hero)
 	
@@ -15,4 +21,5 @@ func filter_hero(character):
 
 func filter_free(character):
 	var character_module = character.get_node(^"Person")
+	print("character: " + character.name + "  is free: " + str(character_module.player))
 	return !character_module.player

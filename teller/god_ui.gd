@@ -24,6 +24,7 @@ var chat_ui_scene = preload("res://ui/chat_ui.tscn")
 var spawn_object_ui_scene: PackedScene = preload("res://teller/spawn_object_ui.tscn")
 var add_effect_ui_scene = preload("res://teller/add_effect_ui.tscn")
 #var inventory_ui_scene = preload("res://module/inventory_ui.tscn")
+var selected_ring_scene = preload("res://character/selected_ring.tscn")
 
 enum Mode {
 	Select,
@@ -50,7 +51,17 @@ var layers_masks = [
 
 var mode: Mode = Mode.Select
 var last_mode: Mode
-var selected
+var selected:
+	set(val):
+		if selected != val:
+			if selected != null:
+				_remove_selected_circle(selected)
+			
+			if val != null:
+				_add_selected_circle(val)
+				
+			selected = val
+
 var spawn_object_ui
 var add_effect_ui
 var inventory_ui
@@ -73,13 +84,12 @@ func _process(_delta):
 	control.visible = selected != null and selected is Character
 	add_effect.visible = selected != null and selected is Character
 	inventory.visible = selected != null and selected is Character
-	#if control.visible:
-		#pass
 	
 	if Input.is_action_just_pressed("leave"):
 		if mode == Mode.Controlling:
 			visible = true
-			selected.get_node(^"Person").release_player()
+			selected.get_node(^"Person").release_player(MultiplayerController.get_local_player().id)
+			get_parent().make_current()
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_parent().global_position = selected.global_position
 			get_parent().global_position.y += 20
@@ -211,7 +221,7 @@ func _on_character_pressed():
 
 func _on_control_pressed():
 	if selected != null and selected is Character:
-		selected.get_node(^"Person").accept_player()
+		selected.get_node(^"Person").accept_player(MultiplayerController.get_local_player().id)
 		visible = false
 		mode = Mode.Controlling
 
@@ -252,6 +262,19 @@ func _on_inventory_pressed():
 	if inventory != null:
 		inventory_ui = inventory.view()
 		add_child(inventory_ui)
-	#inventory_ui = inventory_ui_scene.instantiate()
-	#inventory_ui.inventory = 
-	#add_child(inventory_ui)
+
+
+func _on_remove_pressed():
+	if selected:
+		if "remove" in selected.get_parent():
+			selected.get_parent().remove(selected)
+			selected = null
+
+func _add_selected_circle(obj):
+	var selected_ring = selected_ring_scene.instantiate()
+	obj.add_child(selected_ring)
+	
+func _remove_selected_circle(obj):
+	for child in obj.get_children():
+		if child is SelectedRing:
+			obj.remove_child(child)

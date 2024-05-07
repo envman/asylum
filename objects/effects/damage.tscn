@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b61h5ln2pn8v1"]
+
+[ext_resource type="Script" path="res://objects/effects/damage.gd" id="1_lluea"]
+
+[node name="Damage" type="Node3D"]
+script = ExtResource("1_lluea")

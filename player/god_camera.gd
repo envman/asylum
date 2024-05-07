@@ -9,6 +9,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	change_ui_level(0)
+	make_current()
 
 func change_ui_level(level):
 	for n in level_container.get_child_count():

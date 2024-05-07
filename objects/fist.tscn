@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh6s6wc5xgtfd"]
+
+[ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="1_atsrp"]
+[ext_resource type="Script" path="res://objects/attack.gd" id="2_s75fl"]
+[ext_resource type="PackedScene" uid="uid://b61h5ln2pn8v1" path="res://objects/effects/damage.tscn" id="3_t6ew6"]
+
+[node name="Fist" type="Node3D"]
+
+[node name="Object" parent="." instance=ExtResource("1_atsrp")]
+object_name = "Fist"
+
+[node name="Attack" type="Node3D" parent="Object" node_paths=PackedStringArray("object")]
+script = ExtResource("2_s75fl")
+range = 4.0
+action_name = "Punch"
+object = NodePath(".")
+method = "hit"
+cooldown = 2.0
+
+[node name="Damage" parent="Object/Attack" instance=ExtResource("3_t6ew6")]

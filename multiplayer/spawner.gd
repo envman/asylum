@@ -12,6 +12,7 @@ func _ready():
 	setup_objects("res://objects/effects", Effect.is_effect)
 
 func add(obj):
+	print(obj.scene_file_path)
 	var copy = load(obj.scene_file_path).instantiate()
 		
 	add_child(copy, true)

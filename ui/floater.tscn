@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dda38hmcnt4w0"]
+
+[ext_resource type="Script" path="res://ui/floater.gd" id="1_cngqa"]
+
+[node name="Floater" type="Label3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, 2.08165e-12)
+billboard = 1
+text = "-1"
+font_size = 60
+script = ExtResource("1_cngqa")

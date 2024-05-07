@@ -23,7 +23,6 @@ func _ready():
 			
 		character = character_module.get_parent()
 		
-		
 		client_start(local)
 
 		if multiplayer.is_server():

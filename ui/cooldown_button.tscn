@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bba8pss2vhioe"]
+
+[ext_resource type="Script" path="res://ui/cooldown_button.gd" id="1_0s28w"]
+
+[node name="CooldownButton" type="MarginContainer"]
+offset_left = 67.0
+offset_top = 63.0
+offset_right = 346.0
+offset_bottom = 117.0
+script = ExtResource("1_0s28w")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "testing"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+size_flags_vertical = 8
+value = 50.0
+show_percentage = false
+
+[connection signal="pressed" from="Button" to="." method="_on_test_pressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://blb8qbgp2cgy2"]
+[gd_scene load_steps=3 format=3 uid="uid://blb8qbgp2cgy2"]
 
 [ext_resource type="Script" path="res://character/camera/camera_controller.gd" id="1_777qg"]
+[ext_resource type="PackedScene" uid="uid://tpv1o326hvyy" path="res://character/ui/character_ui.tscn" id="2_aampe"]
 
 [node name="CameraController" type="Node3D"]
 top_level = true
@@ -12,3 +13,8 @@ collision_mask = 1048065
 spring_length = 4.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+
+[node name="CharacterUI" parent="SpringArm3D/Camera3D" instance=ExtResource("2_aampe")]
+
+[node name="ReverseCamera" type="Camera3D" parent="SpringArm3D/Camera3D"]
+transform = Transform3D(-1, -1.39043e-15, 8.74228e-08, 1.7172e-08, 0.980519, 0.196425, -8.57197e-08, 0.196425, -0.980519, 0, -0.305135, -2.4459)

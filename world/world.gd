@@ -16,9 +16,12 @@ func _ready():
 	GameObject.setup_objects(objects_spawner)
 	
 	if multiplayer.is_server():
+		var free_characters: Array = characters.get_free_heros()
+		
 		for player in MultiplayerController.get_players():
 			if not player.teller:
-				var hero = characters.get_free_hero()
+				#var hero = characters.get_free_hero()
+				var hero = free_characters.pop_front()
 				hero.get_node(^"Person").hand_off.rpc(player.id)
 				hero.get_node(^"Person").character_name = player.player_name
 		

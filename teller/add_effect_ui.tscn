@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://belvft3sn7cmq"]
+[gd_scene load_steps=3 format=3 uid="uid://belvft3sn7cmq"]
 
 [ext_resource type="Script" path="res://teller/add_effect_ui.gd" id="1_gbtta"]
+[ext_resource type="Script" path="res://addons/object-inspector/scripts/inspector.gd" id="2_4ybsp"]
 
 [node name="AddEffectUI" type="Control"]
 layout_mode = 3
@@ -17,3 +18,22 @@ offset_left = 408.0
 offset_top = 480.0
 offset_right = 764.0
 offset_bottom = 644.0
+
+[node name="ObjectInspector" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 324.0
+offset_top = 171.0
+offset_right = 839.0
+offset_bottom = 425.0
+script = ExtResource("2_4ybsp")
+_search_enabled = false
+
+[node name="Apply" type="Button" parent="."]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 328.0
+offset_right = 570.0
+offset_bottom = 359.0
+text = "Apply"
+
+[connection signal="pressed" from="Apply" to="." method="_on_apply_pressed"]

@@ -45,7 +45,7 @@ func _ready():
 	config.property_set_replication_mode(^"Object/Label3D:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
 	
 	label.text = object_name
-	if get_parent().get_node(^"Model") != null:
+	if get_parent().has_node(^"Model"):
 		label.visible = false
 		
 	var inventory = get_parent().get_parent()

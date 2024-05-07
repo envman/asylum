@@ -9,7 +9,18 @@ class_name Action
 @export var object: Node
 @export var method: String
 
+@export var cooldown: float = 1.0
+
 signal name_updated
+signal available_updated
+
+var available = true:
+	set(val):
+		if available != val:
+			available_updated.emit(val)	
+
+		available = val
+		
 
 @rpc("any_peer", "call_local", "reliable")
 func act():

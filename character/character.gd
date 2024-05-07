@@ -8,3 +8,5 @@ class_name Character
 func _ready():
 	pass
 
+func _on_animation_tree_animation_finished(anim_name):
+	get_node("Person")._on_animation_tree_animation_finished(anim_name)

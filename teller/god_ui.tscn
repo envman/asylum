@@ -97,9 +97,14 @@ text = "Add Effect"
 layout_mode = 2
 text = "Inventory"
 
+[node name="Remove" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Remove"
+
 [connection signal="pressed" from="Buttons/Character" to="." method="_on_character_pressed"]
 [connection signal="pressed" from="Buttons/SpawnObject" to="." method="_on_spawn_object_pressed"]
 [connection signal="pressed" from="Buttons/Control" to="." method="_on_control_pressed"]
 [connection signal="pressed" from="Buttons/Save" to="." method="_on_test_pressed"]
 [connection signal="pressed" from="Buttons/AddEffect" to="." method="_on_add_effect_pressed"]
 [connection signal="pressed" from="Buttons/Inventory" to="." method="_on_inventory_pressed"]
+[connection signal="pressed" from="Buttons/Remove" to="." method="_on_remove_pressed"]

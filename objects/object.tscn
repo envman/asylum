@@ -18,3 +18,4 @@ font_size = 62
 replication_config = SubResource("SceneReplicationConfig_w1ueh")
 
 [node name="Pickup" parent="." instance=ExtResource("2_42hp0")]
+action_name = "Pickup"
