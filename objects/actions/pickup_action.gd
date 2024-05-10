@@ -1,7 +1,7 @@
 extends Action
 
 @onready var characters = $/root/Main/World/Characters
-@onready var objects = $/root/Main/World/Objects
+@onready var objects = $/root/Main/World/NavigationRegion/Objects
 
 func _ready():
 	if in_inventory():
@@ -26,4 +26,4 @@ func act():
 			objects.add(obj, character.global_position)
 		else:
 			objects.remove(obj)
-			inventory.pickup(obj)
+			#inventory.pickup(obj)

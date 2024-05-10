@@ -7,6 +7,50 @@ var PORT = 1337
 var IP_ADDRESS = "127.0.0.1"
 var MAX_CLIENTS = 8
 
+var ran = false
+func _process(delta):
+	if not ran and OS.is_debug_build():
+		var server = host()
+		if not server:
+			print("not server, joining")
+			join()
+		else:
+			print("I AM SERVER")
+			
+		ran = true
+
+func host():
+	if _get_name() == null:
+		return false
+	
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_server(PORT, MAX_CLIENTS)
+	
+	if error != OK:
+		print("Error starting server! ", error)
+		return false
+		
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	multiplayer.multiplayer_peer = peer
+	
+	MultiplayerController.join_lobby()
+	print("JOIN LOBBY")
+	return true
+
+func join():
+	var player_name = _get_name()
+	if player_name == null:
+		return
+	
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_client(IP_ADDRESS, PORT)
+	
+	if error != OK:
+		print("Error connecting to server!" +  error)
+		return
+	
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	multiplayer.multiplayer_peer = peer
 
 func _on_host_pressed():
 	if _get_name() == null:
@@ -26,8 +70,8 @@ func _on_host_pressed():
 
 
 func _on_join_pressed():
-	var name = _get_name()
-	if name == null:
+	var player_name = _get_name()
+	if player_name == null:
 		return
 	
 	var peer = ENetMultiplayerPeer.new()

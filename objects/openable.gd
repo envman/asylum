@@ -1,5 +1,7 @@
 extends Module
 
+@onready var world = $/root/Main/World
+
 @export var open: bool = false:
 	set(val):
 		open = val
@@ -39,6 +41,7 @@ func _process(delta):
 		
 		if abs(parent.rotation_degrees.y - target_rotation) < 1:
 			parent.rotation_degrees.y = target_rotation
+			finished()
 	else:
 		if open != last_state:
 			start_rotation = parent.rotation_degrees.y
@@ -48,8 +51,11 @@ func _process(delta):
 				target_rotation = open_rotation
 			else:
 				target_rotation = closed_rotation
-			
+				
 			last_state = open
+
+func finished():
+	world.bake_navigation_mesh()
 
 func toggle_open(_player):
 	open = !open

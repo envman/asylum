@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dfa72tn0rxwp6"]
+[gd_scene load_steps=15 format=3 uid="uid://dfa72tn0rxwp6"]
 
 [ext_resource type="Script" path="res://objects/door.gd" id="1_g0d32"]
 [ext_resource type="Texture2D" uid="uid://begpxhxxpgrv5" path="res://world/walls/wall_doorway_dungeon_texture.png" id="1_t0nu8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://module/open_action.gd" id="5_8leg1"]
 [ext_resource type="Script" path="res://objects/Lockable.gd" id="5_cqtsq"]
 [ext_resource type="Script" path="res://module/lock_action.gd" id="7_ocovs"]
+[ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="8_y6pw4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v7mo"]
 resource_name = "texture"
@@ -95,3 +96,6 @@ method = "toggle_lock"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Lockable"]
 replication_config = SubResource("SceneReplicationConfig_4scth")
+
+[node name="Object" parent="." instance=ExtResource("8_y6pw4")]
+object_name = "Door"

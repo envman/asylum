@@ -5,7 +5,8 @@ func _ready():
 	player_module.set_animation("Idle")
 
 func move_pressed():
-	return Input.is_action_pressed("walk_down") or Input.is_action_pressed("walk_up") or Input.is_action_pressed("walk_right") or Input.is_action_pressed("walk_left")
+	return player_module.direction != Vector3.ZERO
+	#return Input.is_action_pressed("walk_down") or Input.is_action_pressed("walk_up") or Input.is_action_pressed("walk_right") or Input.is_action_pressed("walk_left")
 
 func _physics_process(_delta):
 	#player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)

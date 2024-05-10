@@ -14,6 +14,8 @@ func _init():
 		"lie": LieState,
 	}
 
+func add_state(state_name: String, type):
+	states[state_name] = type
 
 func get_state(state_name: String):
 	if states.has(state_name):

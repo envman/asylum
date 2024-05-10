@@ -16,7 +16,15 @@ extends Control
 
 var world_scene = preload("res://world/world.tscn")
 
-func _process(_delta):
+var start_in = 0
+var auto_start = false
+
+func _process(delta):
+	if auto_start:
+		start_in -= delta
+		if start_in < 0:
+			_on_start_pressed()
+	
 	var teller_count = players.get_children().filter(func(x): return x.teller == true).size()
 	var hero_count = players.get_children().filter(func(x): return x.teller == false).size()
 	
@@ -31,7 +39,12 @@ func _process(_delta):
 			_add_player(player.id, player.player_name, player.teller)
 # Called when the node enters the scene tree for the first time.
 
+
 func _ready():
+	if OS.is_debug_build():
+		start_in = 2.0
+		auto_start = true
+		
 	start_button.visible = multiplayer.is_server()
 
 func _player_joined(_id, _name):

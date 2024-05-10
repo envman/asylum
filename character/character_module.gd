@@ -19,15 +19,17 @@ var player: bool
 var character_name: String
 var direction
 
-var state_factory: StateFactory
-var state: State
+var state_factory: StateFactory = StateFactory.new()
+var state: State 
 
 var animation_tree: AnimationTree
 var playback
 
 var child_ui
+var state_context = {}
 
 func _ready():
+	print("Character_module ready: ", get_parent().name)
 	sync.root_path = ^"../.."
 	
 	sync.replication_config = SceneReplicationConfig.new()
@@ -46,10 +48,8 @@ func _ready():
 	animation_tree = get_parent().get_node(^"AnimationTree")
 	playback = animation_tree.get("parameters/playback")
 	
-	state_factory = StateFactory.new()
 	change_state("idle")
 	
-	var animation_tree = get_parent().get_node("AnimationTree") as AnimationTree
 	animation_tree.animation_finished.connect(_on_animation_tree_animation_finished)
 	
 func _process(_delta):	
@@ -148,6 +148,7 @@ func change_state(new_state_name):
 	state = state_factory.get_state(new_state_name).new()
 	state.setup(playback, get_parent(), self, last_state_name)
 	state.name = new_state_name
+	state.context = state_context
 	add_child(state)
 
 func set_animation(animation_name):

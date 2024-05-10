@@ -6,7 +6,7 @@ extends Control
 @onready var camera = $".."
 @onready var players: PlayerManager = $/root/Main/Players
 @onready var world: World = $/root/Main/World
-@onready var object_inspector: Inspector = $Inspectors/ObjectInspector
+@onready var object_inspector: Inspector = $RightHandPanel/Inspectors/ObjectInspector
 
 @onready var chat_manager: ChatManager = $/root/Main/World/Chats
 
@@ -15,8 +15,9 @@ extends Control
 @onready var chats = $Chats
 @onready var control = $Buttons/Control
 @onready var add_effect = $Buttons/AddEffect
-@onready var inspectors = $Inspectors
-@onready var inventory = $Buttons/Inventory
+@onready var inspectors = $RightHandPanel/Inspectors
+@onready var inventory_button = $Buttons/Inventory
+@onready var teleport_button = $Buttons/Teleport
 
 signal mouse_clicked
 
@@ -34,6 +35,7 @@ enum Mode {
 	Chatting,
 	SpawnObject,
 	Controlling,
+	Teleport
 }
 
 var layers_masks = [
@@ -62,9 +64,11 @@ var selected:
 				
 			selected = val
 
+var selected_modules = []
 var spawn_object_ui
 var add_effect_ui
 var inventory_ui
+var mouse_over_ui = false
 
 func _ready():
 	tellers.get_items = players.get_tellers
@@ -83,7 +87,8 @@ func _ready():
 func _process(_delta):
 	control.visible = selected != null and selected is Character
 	add_effect.visible = selected != null and selected is Character
-	inventory.visible = selected != null and selected is Character
+	inventory_button.visible = selected != null and selected is Character
+	teleport_button.visible = selected != null and (selected is Character or GameObject.is_game_object(selected))
 	
 	if Input.is_action_just_pressed("leave"):
 		if mode == Mode.Controlling:
@@ -137,27 +142,31 @@ func _input(event):
 			if mouse_pos != null:
 				mouse_clicked.emit(mouse_pos)
 			
+			if mode == Mode.Teleport:
+				selected.global_position = mouse_pos
+			
 			if mode == Mode.SpawnCharacter:
 				var pos = mouse_position()
 				if pos != null:
 					world.spawn_character.rpc_id(1, pos)
 			if mode == Mode.Select:
+				
+				if mouse_over_ui:
+					return
+
 				var obj = get_clicked_object()
 				
 				if obj != null:
-					select(obj)
+					if obj is Character or GameObject.is_game_object(obj):
 					
-					_clear_inspectors()
-					_add_inspector(obj)
-					
-					for child in obj.get_children():
-						if child is Module:
-							_add_inspector(child)
-
-					mode = Mode.Editing
+						select(obj)
 						
-			if mode == Mode.Editing:
-				return
+						_clear_inspectors()
+						_add_inspector(obj)
+						
+						for child in obj.get_children():
+							if child is Module:
+								_add_inspector(child)
 			
 			if mode == Mode.SpawnObject:
 				return
@@ -165,21 +174,54 @@ func _input(event):
 			mode = Mode.Select
 
 func select(object):
+	for teller_module in selected_modules:
+		remove_child(teller_module)
+		
+	selected_modules.clear()
+		
 	print("select: ", object.name)
 	selected = object
 	
-	for child in object.get_children():
-		if not child is Module:
-			continue
-
+	if not selected.has_node(^"CharacterModule"):
+		return
+		
+	var character_module = selected.get_node(^"CharacterModule")
+	for child in character_module.get_children():
 		if "teller_modules" in child:
 			for teller_module in child.teller_modules:
 				var mod = teller_module.instantiate()
-				mod.module = child
+				selected_modules.append(mod)
+				mod.character = selected
+				mod.character_module = character_module
 				mod.camera = camera
-				mod.parent = parent
 				add_child(mod)
+	
+	#for child in object.get_children():
+		#if not child is Module:
+			#continue
+#
+		#if "teller_modules" in child:
+			#for teller_module in child.teller_modules:
+				#var mod = teller_module.instantiate()
+				#mod.module = child
+				#mod.camera = camera
+				#mod.parent = parent
+				#add_child(mod)
 				
+
+func get_mouse_raycast():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_length = 100
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	var space = parent.get_world_3d().direct_space_state
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	ray_query.from = from
+	ray_query.to = to
+	ray_query.collision_mask = layers_masks[camera.ui_level]
+	ray_query.collide_with_areas = true
+	
+	return space.intersect_ray(ray_query)
 
 func get_clicked_object():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -278,3 +320,16 @@ func _remove_selected_circle(obj):
 	for child in obj.get_children():
 		if child is SelectedRing:
 			obj.remove_child(child)
+			
+
+
+func _on_ui_mouse_entered():
+	mouse_over_ui = true
+
+
+func _on_ui_mouse_exited():
+	mouse_over_ui = false
+
+
+func _on_teleport_pressed():
+	mode = Mode.Teleport

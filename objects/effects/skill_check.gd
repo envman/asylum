@@ -23,7 +23,7 @@ var next_step = 0
 
 var skill_check_ui_scene = preload("res://objects/effects/skill_check_ui.tscn")
 
-func client_start(local):
+func client_start():
 	if not local:
 		return
 	
@@ -31,7 +31,7 @@ func client_start(local):
 	skill_check_ui.skill_check = self
 	character_module.add_child_ui(skill_check_ui)
 
-func client_process(local, delta):
+func client_process(_delta):
 	if not local:
 		character_module.info_label.visible = true
 		

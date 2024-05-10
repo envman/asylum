@@ -9,7 +9,7 @@ var player_name: String
 var lobby_scene = preload("res://menu/lobby.tscn")
 var player_scene = preload("res://player/player.tscn")
 
-var log = []
+#var log = []
 
 
 signal player_joined
@@ -39,17 +39,17 @@ func _connection_failed():
 	_log("Connection failed")
 
 func _log(text: String):
-	log.append(text)
+	#log.append(text)
 	print(text)
 
 @rpc("any_peer", "call_local", "reliable")
-func add_player(id, name):
-	print("add_player: " + str(id) + " - " + name)
+func add_player(id, player_name):
+	print("add_player: " + str(id) + " - " + player_name)
 	
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	player.id = id
-	player.player_name = name
+	player.player_name = player_name
 	
 	if OS.is_debug_build():
 		player.teller = multiplayer.get_remote_sender_id() == 1

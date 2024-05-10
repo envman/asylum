@@ -4,6 +4,6 @@ extends Control
 
 @onready var label = $Panel/RichTextLabel
 
-func _process(delta):
+func _process(_delta):
 	if label.text != text:
 		label.text = text

@@ -6,6 +6,7 @@ func remove(obj):
 
 @rpc("authority", "call_local", "reliable")
 func confirm_deleted(path):
+	print("delted ", path)
 	var obj = get_node(path)
 	if obj != null:
 		remove_child(obj)

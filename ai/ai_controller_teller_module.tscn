@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnv6or0djpckb"]
+
+[ext_resource type="Script" path="res://ai/ai_controller_teller_module.gd" id="1_gq6te"]
+
+[node name="AIControllerTellerModule" type="Node3D"]
+script = ExtResource("1_gq6te")

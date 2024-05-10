@@ -20,7 +20,7 @@ func _ready():
 		)
 		effect_list.add_child(button)
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("leave"):
 		queue_free()
 

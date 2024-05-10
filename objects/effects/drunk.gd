@@ -11,7 +11,7 @@ var next_shake = 0
 var next_rotation: Vector3
 @export var time: float = 10
 
-func client_start(local):
+func client_start():
 	if not local:
 		return
 
@@ -27,7 +27,7 @@ func server_start():
 	if drunk_count > 4:
 		get_parent().add_child(pass_out_effect_scene.instantiate())
 
-func client_process(local, delta):
+func client_process(delta):
 	if not local:
 		return
 	

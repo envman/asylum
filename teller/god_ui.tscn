@@ -26,6 +26,7 @@ offset_right = -1008.0
 offset_bottom = -478.0
 
 [node name="ChatsLabel" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 1001.0
 offset_top = 7.0
@@ -34,6 +35,7 @@ offset_bottom = 30.0
 text = "Conversations"
 
 [node name="Chats" parent="." instance=ExtResource("2_1sneo")]
+visible = false
 layout_mode = 1
 offset_left = 1001.0
 offset_top = 40.0
@@ -51,20 +53,6 @@ layout_mode = 1
 offset_top = 193.0
 offset_right = -981.0
 offset_bottom = -296.0
-
-[node name="Inspectors" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 276.0
-offset_top = 65.0
-offset_right = 947.0
-offset_bottom = 531.0
-
-[node name="ObjectInspector" type="VBoxContainer" parent="Inspectors"]
-custom_minimum_size = Vector2(2.08165e-12, 100)
-layout_mode = 2
-theme_type_variation = &"Inspector"
-script = ExtResource("2_mkq2b")
-_search_enabled = false
 
 [node name="Buttons" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -86,6 +74,7 @@ layout_mode = 2
 text = "Assume Direct Control"
 
 [node name="Save" type="Button" parent="Buttons"]
+visible = false
 layout_mode = 2
 text = "Save"
 
@@ -101,6 +90,31 @@ text = "Inventory"
 layout_mode = 2
 text = "Remove"
 
+[node name="Teleport" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Teleport"
+
+[node name="RightHandPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 822.0
+offset_top = 1.0
+offset_right = 1153.0
+offset_bottom = 352.0
+
+[node name="Inspectors" type="VBoxContainer" parent="RightHandPanel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 325.0
+offset_bottom = 346.0
+
+[node name="ObjectInspector" type="VBoxContainer" parent="RightHandPanel/Inspectors"]
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
+theme_type_variation = &"Inspector"
+script = ExtResource("2_mkq2b")
+_search_enabled = false
+
 [connection signal="pressed" from="Buttons/Character" to="." method="_on_character_pressed"]
 [connection signal="pressed" from="Buttons/SpawnObject" to="." method="_on_spawn_object_pressed"]
 [connection signal="pressed" from="Buttons/Control" to="." method="_on_control_pressed"]
@@ -108,3 +122,6 @@ text = "Remove"
 [connection signal="pressed" from="Buttons/AddEffect" to="." method="_on_add_effect_pressed"]
 [connection signal="pressed" from="Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Buttons/Remove" to="." method="_on_remove_pressed"]
+[connection signal="pressed" from="Buttons/Teleport" to="." method="_on_teleport_pressed"]
+[connection signal="mouse_entered" from="RightHandPanel/Inspectors" to="." method="_on_ui_mouse_entered"]
+[connection signal="mouse_exited" from="RightHandPanel/Inspectors" to="." method="_on_ui_mouse_exited"]

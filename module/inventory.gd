@@ -12,8 +12,8 @@ func _ready():
 	
 	GameObject.setup_objects(multiplayer_spawner)
 	
-	multiplayer_spawner.spawned.connect(func(x): inventory_updated.emit())
-	multiplayer_spawner.despawned.connect(func(x): inventory_updated.emit())
+	multiplayer_spawner.spawned.connect(func(_x): inventory_updated.emit())
+	multiplayer_spawner.despawned.connect(func(_x): inventory_updated.emit())
 
 func has_named_item(item_name: String):
 	for child in get_children():

@@ -5,7 +5,7 @@ extends Effect
 var black_out_scene = preload("res://objects/effects/black_out.tscn")
 var black_out
 
-func client_start(local):
+func client_start():
 	if not local:
 		return
 	
@@ -15,7 +15,7 @@ func client_start(local):
 	#character_module.change_state("lie")
 
 
-func client_process(local, delta):
+func client_process(_delta):
 	if not local:
 		return
 	

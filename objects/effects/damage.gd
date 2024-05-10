@@ -13,9 +13,7 @@ func server_start():
 	var damagable = get_parent().get_parent().get_node(^"Damagable")
 	damagable.hit(amount)
 
-func client_start(local):
-	var character = get_parent().get_parent().get_parent()
-	
+func client_start():
 	var floater = floater_scene.instantiate()
 	floater.text = "-" + str(amount)
 	character.add_child(floater)
@@ -24,9 +22,8 @@ func client_start(local):
 	highlight.target = true
 	character.add_child(highlight)
 
-func client_process(local, delta):
+func client_process(delta):
 	highlight_duration -= delta
-	if highlight_duration < 0:
-		var character = get_parent().get_parent().get_parent()
-		
+	if highlight_duration < 0 and highlight != null:
 		character.remove_child(highlight)
+		highlight = null

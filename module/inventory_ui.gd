@@ -43,10 +43,6 @@ func clear_actions():
 	for child in action_list.get_children():
 		action_list.remove_child(child)
 
-func _process(delta):
-	pass
-
-
 func _on_add_item_pressed():
 	var spawn_object_ui = spawn_object_ui_scene.instantiate()
 	spawn_object_ui.object_selected.connect(func(x):

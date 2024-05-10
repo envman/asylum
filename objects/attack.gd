@@ -1,4 +1,5 @@
 extends Action
+class_name Attack
 
 @export var range: float
 @export var state: String = "attack"
@@ -14,9 +15,8 @@ func _process(delta):
 	else:
 		available = _available()		
 
-func hit(player):
+func hit(_player):
 	if cooldown_time > 0:
-		print("cooling down")
 		return
 	
 	cooldown_time = cooldown

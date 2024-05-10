@@ -1,7 +1,7 @@
 extends Control
 
 @onready var objects_list := $ObjectsList
-@onready var spawned_objects = $/root/Main/World/Objects
+@onready var spawned_objects = $/root/Main/World/NavigationRegion/Objects
 
 var objects := []
 var spawning

@@ -23,12 +23,12 @@ func _ready():
 			
 		character = character_module.get_parent()
 		
-		client_start(local)
+		client_start()
 
 		if multiplayer.is_server():
 			server_start()
 
-func client_start(local: bool):
+func client_start():
 	pass
 
 func server_start():
@@ -36,13 +36,13 @@ func server_start():
 
 func _process(delta):
 	if active:
-		client_process(local, delta)
+		client_process(delta)
 	
 	if multiplayer.is_server():
 		server_process(delta)
 
-func client_process(local, delta):
+func client_process(_delta):
 	pass
 
-func server_process(delta):
+func server_process(_delta):
 	pass

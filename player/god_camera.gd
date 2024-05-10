@@ -13,7 +13,9 @@ func _ready():
 
 func change_ui_level(level):
 	for n in level_container.get_child_count():
-		level_container.get_child(n).visible = n <= level
+		var lev = level_container.get_child(n)
+		if lev.name.begins_with("Level"):
+			lev.visible = n <= level
 	
 	ui_level = level
 

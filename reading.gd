@@ -6,14 +6,14 @@ class_name ReadingEffect
 var reading_ui_scene = preload("res://objects/effects/reading_ui.tscn")
 var ui
 
-func client_start(local):
+func client_start():
 	if not local:
 		return
 	
 	ui = reading_ui_scene.instantiate()
 	add_child(ui)
 
-func client_process(local, delta):
+func client_process(_delta):
 	if not local:
 		return
 	

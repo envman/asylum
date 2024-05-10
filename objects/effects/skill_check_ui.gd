@@ -12,7 +12,7 @@ var skill_check
 @onready var check := $HBoxContainer/Check
 @onready var finish := $HBoxContainer/Finish
 
-func _process(delta):
+func _process(_delta):
 	title.text = skill_check.skill_text() +  " check"
 	difficulty.text = "Difficulty: " + str(skill_check.difficulty)
 	roll_label.text = "Roll: " + str(skill_check.roll)

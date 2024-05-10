@@ -5,6 +5,7 @@ var animation
 var player
 var last_state
 var player_module
+var context = {}
 
 func setup(setup_animation, setup_player, setup_player_module, setup_last_state):
 	animation = setup_animation

@@ -24,7 +24,7 @@ func _ready():
 	#camera_controller = parent_camera.get_parent().get_parent()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#camera.global_position = parent_camera.global_position
 	camera.transform = parent_camera.get_global_transform()
 	#camera.rotation_degrees = camera_controller.rotation_degrees

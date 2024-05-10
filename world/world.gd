@@ -8,8 +8,8 @@ var wizard_scene = preload("res://character/wizard/wizard.tscn")
 
 @onready var spawn = $CharacterSpawn
 @onready var characters = $Characters
-@onready var objects_spawner = $ObjectsSpawner
-@onready var objects = $Objects
+@onready var objects_spawner = $NavigationRegion/ObjectsSpawner
+@onready var objects = $NavigationRegion/Objects
 @onready var navigation_region = $NavigationRegion
 
 func _ready():
@@ -30,7 +30,8 @@ func _ready():
 		add_child(camera)
 	else:
 		for level in navigation_region.get_children():
-			level.visible = true
+			if "visible" in level:
+				level.visible = true
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_character(pos: Vector3):
@@ -40,3 +41,6 @@ func spawn_character(pos: Vector3):
 	character.owner = self
 	character.hand_off.rpc(MultiplayerController.get_local_player().id)
 	
+
+func bake_navigation_mesh():
+	navigation_region.bake_navigation_mesh(true)

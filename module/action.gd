@@ -36,11 +36,11 @@ func in_inventory() -> bool:
 	if game_object == null:
 		return false
 	
-	var object = game_object.get_parent()
-	if object == null:
+	var object_parent = game_object.get_parent()
+	if object_parent == null:
 		return false
 	
-	var inventory = object.get_parent()
+	var inventory = object_parent.get_parent()
 	if inventory == null:
 		return false
 	
