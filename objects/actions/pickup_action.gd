@@ -4,26 +4,31 @@ extends Action
 @onready var objects = $/root/Main/World/NavigationRegion/Objects
 
 func _ready():
-	if in_inventory():
-		action_name = "Drop"
+	var parent = get_parent()
+	if parent.heavy:
+		available = false
 
 @rpc("any_peer", "call_local", "reliable")
 func act():
 	if not multiplayer.is_server():
 		return
 	
-	var player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
-	var character = player.get_character()
-	var character_module = character.get_node(^"CharacterModule")
+	var obj = get_parent().get_parent()
 	
-	var modules = character_module.get_children().filter(func(x): return x is Inventory)
-	if modules.size() == 1:
-		var inventory = modules[0]
-		var obj = get_parent().get_parent()
+	if in_inventory():
+		var inventory = obj.get_parent()
+		var character = inventory.get_parent().get_parent()
 		
-		if in_inventory():
-			inventory.remove(obj)
-			objects.add(obj, character.global_position)
-		else:
-			objects.remove(obj)
-			#inventory.pickup(obj)
+		objects.move(obj)
+		obj.global_position = character.global_position
+	else:
+		var player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+		var character = player.get_character()
+		var inventory = character.get_node(^"CharacterModule/Inventory")
+		inventory.move(obj)
+
+func _enter_tree():
+	if in_inventory():
+		action_name = "Drop"
+	else:
+		action_name = "Pickup"

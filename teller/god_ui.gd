@@ -7,10 +7,10 @@ extends Control
 @onready var players: PlayerManager = $/root/Main/Players
 @onready var world: World = $/root/Main/World
 @onready var object_inspector: Inspector = $RightHandPanel/Inspectors/ObjectInspector
+@onready var inspector_label = $RightHandPanel/InspectorLabel
 
 @onready var chat_manager: ChatManager = $/root/Main/World/Chats
 
-@onready var tellers = $Tellers
 @onready var heros = $Heros
 @onready var chats = $Chats
 @onready var control = $Buttons/Control
@@ -18,6 +18,8 @@ extends Control
 @onready var inspectors = $RightHandPanel/Inspectors
 @onready var inventory_button = $Buttons/Inventory
 @onready var teleport_button = $Buttons/Teleport
+@onready var remove_button = $Buttons/Remove
+
 
 signal mouse_clicked
 
@@ -58,9 +60,15 @@ var selected:
 		if selected != val:
 			if selected != null:
 				_remove_selected_circle(selected)
+				inspector_label.text = ""
 			
 			if val != null:
 				_add_selected_circle(val)
+				if GameObject.is_game_object(val):
+					inspector_label.text = GameObject.object(val).object_name
+					
+				if val is Character:
+					inspector_label.text = val.character_name
 				
 			selected = val
 
@@ -71,9 +79,6 @@ var inventory_ui
 var mouse_over_ui = false
 
 func _ready():
-	tellers.get_items = players.get_tellers
-	tellers.render_label("player_name")
-		
 	heros.get_items = players.get_heros
 	heros.render_label("player_name")
 	
@@ -85,6 +90,7 @@ func _ready():
 		return button
 
 func _process(_delta):
+	remove_button.visible = selected != null
 	control.visible = selected != null and selected is Character
 	add_effect.visible = selected != null and selected is Character
 	inventory_button.visible = selected != null and selected is Character
@@ -98,8 +104,10 @@ func _process(_delta):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_parent().global_position = selected.global_position
 			get_parent().global_position.y += 20
+			get_parent().enable_levels()
 		
 		selected = null
+		_clear_inspectors()
 		object_inspector.set_object(null)
 		mode = Mode.Select
 		if inventory_ui != null:
@@ -263,6 +271,8 @@ func _on_character_pressed():
 
 func _on_control_pressed():
 	if selected != null and selected is Character:
+		get_parent().disable_levels()
+		
 		selected.get_node(^"CharacterModule").accept_player(MultiplayerController.get_local_player().id)
 		visible = false
 		mode = Mode.Controlling
@@ -308,9 +318,10 @@ func _on_inventory_pressed():
 
 func _on_remove_pressed():
 	if selected:
-		if "remove" in selected.get_parent():
-			selected.get_parent().remove(selected)
-			selected = null
+		selected.get_parent().remove_child(selected)
+		#if "remove" in selected.get_parent():
+			#selected.get_parent().remove(selected)
+		selected = null
 
 func _add_selected_circle(obj):
 	var selected_ring = selected_ring_scene.instantiate()

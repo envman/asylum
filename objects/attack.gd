@@ -27,7 +27,7 @@ func hit(_player):
 	
 	var character = _get_character()
 	
-	var spawner = target.get_node(^"CharacterModule/Spawner")
+	var spawner = target.get_node(^"CharacterModule/Effects")
 	if spawner == null:
 		print("no spawner")
 		return
@@ -37,7 +37,8 @@ func hit(_player):
 		return
 	
 	for child in get_children():
-		spawner.add(child)
+		child.creator = _get_character()
+		spawner.add_copy(child)
 
 func _available():
 	var character = _get_character()
@@ -56,6 +57,9 @@ func _get_target():
 	if character_module == null:
 		return
 	
+	if not character_module.has_node(^"Targeter"):
+		return
+		
 	var targeter = character_module.get_node(^"Targeter")
 	if targeter == null or targeter.target == null:
 		return

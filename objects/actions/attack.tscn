@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://mxm7j3st1ya7"]
+
+[ext_resource type="Script" path="res://objects/attack.gd" id="1_0pmrg"]
+[ext_resource type="PackedScene" uid="uid://b61h5ln2pn8v1" path="res://objects/effects/damage.tscn" id="2_oupb6"]
+
+[node name="Attack" type="Node3D" node_paths=PackedStringArray("object")]
+script = ExtResource("1_0pmrg")
+range = 4.0
+action_name = "Punch"
+object = NodePath("")
+method = "hit"
+cooldown = 2.0
+
+[node name="Damage" parent="." instance=ExtResource("2_oupb6")]

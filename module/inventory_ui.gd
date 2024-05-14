@@ -19,6 +19,9 @@ func _ready():
 		if GameObject.is_game_object(item):
 			var object: GameObject = GameObject.object(item)
 			
+			if not object.inventory:
+				continue
+			
 			var button = Button.new()
 			button.text = object.object_name
 			button.pressed.connect(func(): select_item(item))

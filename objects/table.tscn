@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgeq31si1cycy"]
+[gd_scene load_steps=7 format=3 uid="uid://cgeq31si1cycy"]
 
 [ext_resource type="Texture2D" uid="uid://0mgk44qd3ckk" path="res://objects/table_medium_dungeon_texture.png" id="1_1vmld"]
+[ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="2_p6lxs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2i65t"]
 resource_name = "texture"
@@ -52,3 +53,7 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
 shape = SubResource("BoxShape3D_2gur2")
+
+[node name="Object" parent="." instance=ExtResource("2_p6lxs")]
+object_name = "Table"
+heavy = true

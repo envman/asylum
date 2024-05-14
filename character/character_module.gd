@@ -10,9 +10,10 @@ var camera_controller_scene = preload("res://character/camera/camera_controller.
 			playback.travel(val)	
 		current_animation = val
 
-@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
+#@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var name_label = $NameLabel
 @onready var info_label = $InfoLabel
+@onready var sync_me: Sync = $Sync
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player: bool
@@ -27,31 +28,27 @@ var playback
 
 var child_ui
 var state_context = {}
+var controlling_player: int
+@export var start_state = "idle"
 
 func _ready():
-	print("Character_module ready: ", get_parent().name)
-	sync.root_path = ^"../.."
-	
-	sync.replication_config = SceneReplicationConfig.new()
-	sync.replication_config.add_property(^"CharacterModule:character_name")
-	sync.replication_config.property_set_replication_mode(^"CharacterModule:character_name", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
-	
-	sync.replication_config.add_property(^"CharacterModule/NameLabel:text")
-	sync.replication_config.property_set_replication_mode(^"CharacterModule/NameLabel:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
-	
-	sync.replication_config.add_property(^".:position")
-	sync.replication_config.add_property(^".:rotation")
-	sync.replication_config.add_property(^".:scale")
-	sync.replication_config.add_property(^"CharacterModule:current_animation")
-	sync.replication_config.property_set_replication_mode(^"CharacterModule:current_animation", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
+	sync_me.add_property(get_parent(), "position")
+	sync_me.add_property(get_parent(), "rotation")
+	sync_me.add_property(get_parent(), "scale")
+	sync_me.add_property(self, "character_name", Sync.SYNC_TYPE_CHANGE)
+	sync_me.add_property(self, "current_animation", Sync.SYNC_TYPE_CHANGE)
+	sync_me.add_property(name_label, "text", Sync.SYNC_TYPE_CHANGE)
 	
 	animation_tree = get_parent().get_node(^"AnimationTree")
 	playback = animation_tree.get("parameters/playback")
 	
-	change_state("idle")
+	change_state(start_state)
 	
 	animation_tree.animation_finished.connect(_on_animation_tree_animation_finished)
 	
+	if not get_parent().hero:
+		character_name = get_parent().character_name
+
 func _process(_delta):	
 	name_label.visible = !player
 	name_label.text = character_name
@@ -107,6 +104,7 @@ func accept_player(id):
 	player = true
 	var owning_player = MultiplayerController.get_player(id)
 	owning_player.character = get_parent().get_path()
+	change_state("idle")
 
 @rpc("authority", "call_local", "reliable")
 func release_player(id):
@@ -118,9 +116,10 @@ func release_player(id):
 
 @rpc("call_local", "reliable")
 func hand_off(id):
+	controlling_player = id
 	get_parent().set_multiplayer_authority(id)
 	for child in get_children():
-		if child is Module or child is Spawner:
+		if child is Module or child is Spawnr:
 			child.set_multiplayer_authority(1)
 	
 	var local_player = MultiplayerController.get_local_player()
@@ -149,7 +148,7 @@ func change_state(new_state_name):
 	state.setup(playback, get_parent(), self, last_state_name)
 	state.name = new_state_name
 	state.context = state_context
-	add_child(state)
+	add_child.call_deferred(state)
 
 func set_animation(animation_name):
 	if player or (multiplayer.is_server() and get_multiplayer_authority() == 1):

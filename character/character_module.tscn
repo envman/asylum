@@ -1,23 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://d37sa6qyh47vo"]
+[gd_scene load_steps=9 format=3 uid="uid://d37sa6qyh47vo"]
 
 [ext_resource type="Script" path="res://character/character_module.gd" id="1_b4vxi"]
 [ext_resource type="Script" path="res://character/selector.gd" id="2_0vmqf"]
 [ext_resource type="Script" path="res://module/inventory.gd" id="3_w6umj"]
-[ext_resource type="PackedScene" uid="uid://gr3la5rf2klh" path="res://multiplayer/spawner.tscn" id="4_2rg0r"]
 [ext_resource type="PackedScene" uid="uid://dh6s6wc5xgtfd" path="res://objects/fist.tscn" id="4_fthwo"]
 [ext_resource type="Script" path="res://character/targeter.gd" id="5_pw2ge"]
-[ext_resource type="Script" path="res://character/damagable.gd" id="7_h05hm"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_mvbe3"]
-viewport_path = NodePath("Damagable/HealthBar/SubViewport")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyb7p"]
-bg_color = Color(0.160784, 0.639216, 0.117647, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0x5nr"]
-properties/0/path = NodePath(".:health")
-properties/0/spawn = true
-properties/0/replication_mode = 2
+[ext_resource type="PackedScene" uid="uid://2ejjnkba5n8k" path="res://module/damagable.tscn" id="6_mtl2g"]
+[ext_resource type="PackedScene" uid="uid://dau7w6nna6wlr" path="res://multiplayer/sync.tscn" id="8_83jpw"]
+[ext_resource type="PackedScene" uid="uid://do75h126mmmsn" path="res://multiplayer/spawnr.tscn" id="8_o8sgl"]
 
 [node name="CharacterModule" type="Node3D"]
 script = ExtResource("1_b4vxi")
@@ -35,8 +25,6 @@ billboard = 1
 text = "Rolling: 20"
 font_size = 60
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-
 [node name="Selector" type="Node3D" parent="."]
 script = ExtResource("2_0vmqf")
 
@@ -49,12 +37,7 @@ collision_mask = 3
 visible = false
 script = ExtResource("3_w6umj")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Inventory"]
-
 [node name="Fist" parent="Inventory" instance=ExtResource("4_fthwo")]
-
-[node name="Spawner" parent="." instance=ExtResource("4_2rg0r")]
-effects = true
 
 [node name="FaceCamera" type="Camera3D" parent="."]
 transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 1.54973, -1.41004)
@@ -67,27 +50,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.576, -0.42223)
 target_position = Vector3(2.08165e-12, 2.08165e-12, -20)
 collision_mask = 5
 
-[node name="Damagable" type="Node3D" parent="."]
-script = ExtResource("7_h05hm")
+[node name="Damagable" parent="." instance=ExtResource("6_mtl2g")]
 
-[node name="HealthBar" type="Sprite3D" parent="Damagable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.71369, 0)
-billboard = 1
-texture = SubResource("ViewportTexture_mvbe3")
+[node name="Sync" parent="." instance=ExtResource("8_83jpw")]
 
-[node name="SubViewport" type="SubViewport" parent="Damagable/HealthBar"]
-disable_3d = true
-transparent_bg = true
-size = Vector2i(100, 15)
-size_2d_override = Vector2i(100, 15)
-
-[node name="ProgressBar" type="ProgressBar" parent="Damagable/HealthBar/SubViewport"]
-custom_minimum_size = Vector2(100, 15)
-offset_right = 4.0
-offset_bottom = 27.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_jyb7p")
-value = 100.0
-show_percentage = false
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Damagable"]
-replication_config = SubResource("SceneReplicationConfig_0x5nr")
+[node name="Effects" parent="." instance=ExtResource("8_o8sgl")]

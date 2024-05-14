@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5bmcca4jm2jw"]
+
+[ext_resource type="PackedScene" uid="uid://cfljs0wab6703" path="res://world/floors/floor_tile_big_grate_open.gltf.glb" id="1_csfed"]
+[ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="2_1vaan"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5f2a"]
+size = Vector3(4, 0.2, 4)
+
+[node name="Grate" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_d5f2a")
+
+[node name="Model" parent="." instance=ExtResource("1_csfed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="Object" parent="." instance=ExtResource("2_1vaan")]
+object_name = "Grate"
+inventory = false
+heavy = true

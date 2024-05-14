@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dau7w6nna6wlr"]
+
+[ext_resource type="Script" path="res://multiplayer/sync.gd" id="1_bj61y"]
+
+[node name="Sync" type="Node3D"]
+script = ExtResource("1_bj61y")

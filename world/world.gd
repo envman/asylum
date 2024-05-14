@@ -6,15 +6,11 @@ var god_camera_scene = preload("res://teller/god_camera.tscn")
 var rogue_scene = preload("res://character/rogue/rogue.tscn")
 var wizard_scene = preload("res://character/wizard/wizard.tscn")
 
-@onready var spawn = $CharacterSpawn
 @onready var characters = $Characters
-@onready var objects_spawner = $NavigationRegion/ObjectsSpawner
 @onready var objects = $NavigationRegion/Objects
 @onready var navigation_region = $NavigationRegion
 
 func _ready():
-	GameObject.setup_objects(objects_spawner)
-	
 	if multiplayer.is_server():
 		var free_characters: Array = characters.get_free_heros()
 		
@@ -32,6 +28,9 @@ func _ready():
 		for level in navigation_region.get_children():
 			if "visible" in level:
 				level.visible = true
+	
+	characters.visible = true
+	objects.visible = true
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_character(pos: Vector3):

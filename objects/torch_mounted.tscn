@@ -45,30 +45,32 @@ shadow_mesh = SubResource("ArrayMesh_tryhj")
 [sub_resource type="Gradient" id="Gradient_3ikqm"]
 colors = PackedColorArray(1, 0.643137, 0.109804, 1, 1, 0.34902, 0.270588, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7si4r"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rp4s5"]
 gradient = SubResource("Gradient_3ikqm")
 
 [sub_resource type="Gradient" id="Gradient_uegur"]
-offsets = PackedFloat32Array(0, 0.286364, 0.531818, 0.963636)
-colors = PackedColorArray(0, 0, 0, 1, 1, 0.721569, 0.341176, 1, 0.531818, 0.531818, 0.531818, 1, 0.595455, 0.595455, 0.595455, 1)
+offsets = PackedFloat32Array(0, 0.52994, 0.94012, 0.963636)
+colors = PackedColorArray(0.972549, 0.976471, 0.254902, 1, 1, 0.721569, 0.341176, 1, 0.990957, 0.0361062, 0.030936, 1, 0.595455, 0.595455, 0.595455, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_j3tr6"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t850t"]
 gradient = SubResource("Gradient_uegur")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dslff"]
 particle_flag_disable_z = true
-angle_min = 3.9968e-14
+angle_min = -720.0
 angle_max = 360.6
-initial_velocity_max = 7.0
+spread = 10.0
+initial_velocity_max = 4.0
 angular_velocity_min = 1.4988e-14
-angular_velocity_max = 70.0
+angular_velocity_max = 20.0
 gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
-color_ramp = SubResource("GradientTexture1D_j3tr6")
-color_initial_ramp = SubResource("GradientTexture1D_7si4r")
+scale_min = 0.5
+color_ramp = SubResource("GradientTexture1D_t850t")
+color_initial_ramp = SubResource("GradientTexture1D_rp4s5")
 anim_speed_max = 1.0
 anim_offset_max = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qxmbh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih8nh"]
 transparency = 4
 blend_mode = 1
 shading_mode = 0
@@ -80,25 +82,32 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_ssks0"]
-material = SubResource("StandardMaterial3D_qxmbh")
+material = SubResource("StandardMaterial3D_ih8nh")
 size = Vector2(0.2, 0.2)
 
-[node name="torch_mounted" type="MeshInstance3D"]
+[node name="TorchMounted" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.420559, -0.261632)
 mesh = SubResource("ArrayMesh_4aklo")
 skeleton = NodePath("")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(-0.0116935, -0.999932, 0, 0.999932, -0.0116935, 0, 0, 0, 1, 0.0478672, 0.52115, 0.39699)
-amount = 7000
+cast_shadow = 0
+gi_mode = 0
+amount = 300
 lifetime = 0.5
+speed_scale = 0.5
 randomness = 1.0
+interpolate = false
 local_coords = true
 draw_order = 3
+trail_lifetime = 5.9
 process_material = SubResource("ParticleProcessMaterial_dslff")
 draw_pass_1 = SubResource("QuadMesh_ssks0")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.048652, 0.494259, 0.346028)
-light_color = Color(0.933333, 0.462745, 0, 1)
-light_energy = 2.051
+light_color = Color(0.807991, 0.55297, 0.195681, 1)
+light_energy = 16.0
+shadow_enabled = true
+omni_range = 50.0

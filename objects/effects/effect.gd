@@ -12,6 +12,7 @@ var local := false
 
 var character: Character
 var character_module: CharacterModule
+@export var creator: Character
 
 func _ready():
 	if get_parent().get_parent() is CharacterModule:

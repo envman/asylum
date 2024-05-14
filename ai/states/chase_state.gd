@@ -6,7 +6,6 @@ var target: Node3D
 var attack: Attack
 
 func _ready():
-	print("chase_state")
 	player_module.set_animation("Walk")
 	nav_agent = context["nav_agent"]
 	target = context["attack_target"]
@@ -14,7 +13,7 @@ func _ready():
 	
 	nav_agent.target_position = target.global_position
 	
-	nav_agent.target_reached.connect(target_reached)
+	#nav_agent.target_reached.connect(target_reached)
 	nav_agent.velocity_computed.connect(move_player)
 
 func _physics_process(_delta):
@@ -46,12 +45,14 @@ func move_player(new_velocity: Vector3):
 	player.rotation.y = lerp_angle(player.rotation.y, atan2(player.velocity.x, player.velocity.z), 1) + 3.14
 	player.move_and_slide()
 
-func target_reached():
+#func target_reached():
+	
+	
 	#if context["attack_target"] != null:
-	player_module.change_state("attack_character")
+	#player_module.change_state("attack_character")
 	#else:
 		#player_module.change_state("idle")
 
 func exit():
-	nav_agent.target_reached.disconnect(target_reached)
+	#nav_agent.target_reached.disconnect(target_reached)
 	nav_agent.velocity_computed.disconnect(move_player)

@@ -11,6 +11,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wmn0h")
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 72.0
+offset_right = 488.0
+offset_bottom = 95.0
+text = "Object Name"
+
 [node name="Actions" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1

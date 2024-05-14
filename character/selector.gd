@@ -27,16 +27,22 @@ var action_ui
 
 func add_ui(obj):
 	for c in obj.get_children():
-		if c is Module or c is Object:
+		if c is Module or c is GameObject:
 			for mod_child in c.get_children():
 				if mod_child is Action:
 					if action_ui == null:
 						action_ui = actions_ui_scene.instantiate()
+						if c is GameObject:
+							action_ui.object_name = c.object_name
 						get_parent().add_child(action_ui)
 					
-					action_ui.add_action(mod_child)
+					if mod_child.available:
+						action_ui.add_action(mod_child)
 
 func remove_ui():
+	if action_ui == null:
+		return
+	
 	get_parent().remove_child(action_ui)
 	action_ui = null
 

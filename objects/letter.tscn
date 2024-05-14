@@ -35,3 +35,5 @@ method = "consume"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_i2c30")
+
+[editable path="Object"]

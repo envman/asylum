@@ -11,11 +11,18 @@ var highlight_duration = 0.6
 
 func server_start():
 	var damagable = get_parent().get_parent().get_node(^"Damagable")
-	damagable.hit(amount)
+	damagable.hit(amount, creator)
+	
+	client_run.rpc(amount)
 
-func client_start():
+@rpc("authority", "call_local", "reliable")
+func client_run(damage_amount):
+	
+	#pass
+
+#func client_start():
 	var floater = floater_scene.instantiate()
-	floater.text = "-" + str(amount)
+	floater.text = "-" + str(damage_amount)
 	character.add_child(floater)
 	
 	highlight = highlight_scene.instantiate()

@@ -8,7 +8,7 @@ var IP_ADDRESS = "127.0.0.1"
 var MAX_CLIENTS = 8
 
 var ran = false
-func _process(delta):
+func _process(_delta):
 	if not ran and OS.is_debug_build():
 		var server = host()
 		if not server:

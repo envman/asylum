@@ -10,6 +10,10 @@ var meshes = []
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():	
 	var parent = get_parent()
+	
+	if not parent.has_node(^"Model"):
+		return
+	
 	var parent_model = parent.get_node(^"Model")
 	
 	if parent_model == null:
@@ -36,7 +40,7 @@ func _enter_tree():
 func add_highligher(model: MeshInstance3D):
 	shader = ShaderMaterial.new()
 	shader.shader = highlight_shader
-	shader.set_shader_parameter("strength", 0.3)
+	shader.set_shader_parameter("strength", 0.8)
 	shader.set_shader_parameter("target", target)
 	model.set_material_overlay(shader)
 

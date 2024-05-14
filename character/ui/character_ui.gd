@@ -7,7 +7,7 @@ var cooldown_button_scene = preload("res://ui/cooldown_button.tscn")
 var parent_camera: Camera3D
 var camera_controller
 var character_module: CharacterModule
-var inventory: Inventory
+var inventory: Spawnr
 
 @onready var hotbar = $Actions
 
@@ -20,15 +20,12 @@ func _ready():
 	
 	_load_actions()
 	
-	inventory.inventory_updated.connect(_load_actions)
-	#camera_controller = parent_camera.get_parent().get_parent()
+	# TODO: fix this!
+	#inventory.inventory_updated.connect(_load_actions)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#camera.global_position = parent_camera.global_position
 	camera.transform = parent_camera.get_global_transform()
-	#camera.rotation_degrees = camera_controller.rotation_degrees
-	#get_global_transform()
+
 	if Input.is_action_just_pressed("hotbar_1"):
 		_fire_action(0)
 	if Input.is_action_just_pressed("hotbar_2"):

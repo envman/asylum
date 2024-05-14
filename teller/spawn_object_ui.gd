@@ -15,12 +15,19 @@ func _ready():
 		_add_object(object)
 		
 func _load_objects():
-	var dir := DirAccess.open("res://objects")
+	_find_objects("res://objects")
+
+func _find_objects(search_path):
+	var dir := DirAccess.open(search_path)
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
 	while file_name != "":
+		var path = search_path + "/" + file_name
+		
+		if dir.current_is_dir():
+			_find_objects(path)
+		
 		if file_name.ends_with(".tscn"):
-			var path = "res://objects/" + file_name
 			var obj_scene: PackedScene = load(path)
 			var obj = obj_scene.instantiate()
 			

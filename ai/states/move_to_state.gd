@@ -22,6 +22,10 @@ func _physics_process(_delta):
 		if context["attack_target"].global_position.distance_to(player.global_position) < 2:
 			nav_agent.target_position = player.global_position
 			player_module.change_state("attack_character")
+			
+	var distance_to_target = player.global_position.distance_to(nav_agent.target_position)
+	if distance_to_target < 1.5:
+		player_module.change_state("idle")
 
 func move_player(new_velocity: Vector3):
 	player.velocity = new_velocity

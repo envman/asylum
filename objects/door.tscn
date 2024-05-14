@@ -99,3 +99,4 @@ replication_config = SubResource("SceneReplicationConfig_4scth")
 
 [node name="Object" parent="." instance=ExtResource("8_y6pw4")]
 object_name = "Door"
+heavy = true

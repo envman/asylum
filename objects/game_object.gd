@@ -31,23 +31,20 @@ static func setup_objects(multiplayer_spawner: MultiplayerSpawner) -> void:
 		file_name = dir.get_next()
 
 @export var object_name: String
+@export var inventory: bool = true
+@export var heavy: bool = false
+@export var held: bool = false
 
-@onready var sync = $MultiplayerSynchronizer
+@onready var sync_me: Sync = $Sync
 @onready var label = $Label3D
 
 func _ready():
-	#var p = get_parent()
+	sync_me.add_property(get_parent(), "position")
+	sync_me.add_property(label, "text", Sync.SYNC_TYPE_CHANGE)
 	
-	sync.root_path = ^"../.."
-	
-	var config: SceneReplicationConfig = sync.replication_config
-	#config.add_property(str(get_path()) + ":position")
-	config.add_property(^".:position")
-	config.add_property(str(label.get_path()) + ":text")
-	#config.add_property(^"Object/Label3D:text")
-	config.property_set_replication_mode(str(label.get_path()) + ":text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
-	#config.property_set_replication_mode(^"Object/Label3D:text", SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)
-	
+	var parent_props = PropHelper.list_exported_props(get_parent())
+	for prop in parent_props:
+		sync_me.add_property(get_parent(), prop, Sync.SYNC_TYPE_CHANGE)
 	
 	label.text = object_name
 	if get_parent().has_node(^"Model"):
@@ -58,14 +55,3 @@ func _ready():
 		if get_parent().has_node("CollisionShape3D"):
 			var collision: CollisionShape3D = get_parent().get_node("CollisionShape3D")
 			collision.disabled = true
-	
-func _exit_tree():
-	var config = sync.replication_config
-	config.remove_property(^".:position")
-	config.remove_property(str(label.get_path()) + ":text")
-	#for prop in sync.replication_config.get_property_list():
-		#print(prop)
-	#sync
-	#multiplayer.object_configuration_remove(sync)
-	sync.queue_free()
-	

@@ -1,6 +1,9 @@
 extends Control
 
+@onready var label = $Label
 @onready var actions_list = $Actions
+
+var object_name = ""
 var actions = []
 
 var index = 0:
@@ -12,12 +15,17 @@ func _update_colors():
 	for action_label: Label in actions_list.get_children():
 		action_label.add_theme_color_override("font_color", Color.DARK_GRAY)
 	
+	if actions_list.get_child_count() <= index:
+		return
+		
 	var label: Label = actions_list.get_child(index)
 	if label != null:
 		label.add_theme_color_override("font_color", Color.WHITE)
 
 func _ready():
 	_update_colors()
+	
+	label.text = object_name
 
 func _enter_tree():
 	UI.focus = true

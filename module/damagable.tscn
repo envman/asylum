@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://2ejjnkba5n8k"]
+
+[ext_resource type="Script" path="res://character/damagable.gd" id="1_m54ll"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyb7p"]
+bg_color = Color(0.160784, 0.639216, 0.117647, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mvbe3"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0x5nr"]
+properties/0/path = NodePath(".:health")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Damagable" type="Node3D"]
+script = ExtResource("1_m54ll")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(100, 15)
+size_2d_override = Vector2i(100, 15)
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport"]
+custom_minimum_size = Vector2(100, 15)
+offset_right = 4.0
+offset_bottom = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_jyb7p")
+value = 100.0
+show_percentage = false
+
+[node name="HealthBar" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.71369, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_mvbe3")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0x5nr")

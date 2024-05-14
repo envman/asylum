@@ -1,8 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://gr3la5rf2klh"]
+[gd_scene load_steps=2 format=3 uid="uid://dwywdi3xl768u"]
 
-[ext_resource type="Script" path="res://multiplayer/spawner.gd" id="1_enyuq"]
+[sub_resource type="GDScript" id="GDScript_bpfwk"]
+script/source = "extends Node3D
+class_name Spawner
+
+@export var effects: bool = false
+
+@onready var spawner = $MultiplayerSpawner
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	spawner.spawn_path = get_path()
+	
+	setup_objects(\"res://objects/effects\", Effect.is_effect)
+
+func add(obj):
+	print(obj.scene_file_path)
+	var copy = load(obj.scene_file_path).instantiate()
+		
+	add_child(copy, true)
+	
+	if \"copy_to\" in obj:
+		obj.copy_to(copy)
+
+func setup_objects(folder: String, is_valid: Callable):
+	var dir := DirAccess.open(folder)
+	dir.list_dir_begin()
+	var file_name := dir.get_next()
+	
+	while file_name != \"\":
+		if file_name.ends_with(\".tscn\"):
+			var path = folder + \"/\" + file_name
+			var obj_scene: PackedScene = load(path)
+			var obj = obj_scene.instantiate()
+			
+			if is_valid.call(obj):
+				spawner.add_spawnable_scene(path)
+
+		file_name = dir.get_next()
+"
 
 [node name="Spawner" type="Node3D"]
-script = ExtResource("1_enyuq")
+script = SubResource("GDScript_bpfwk")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
