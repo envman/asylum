@@ -19,7 +19,20 @@ var world_scene = preload("res://world/world.tscn")
 var start_in = 0
 var auto_start = false
 
+func _ready():
+	#if OS.is_debug_build() and not MultiplayerController.server_testing:
+		#print("auto start")
+		#start_in = 2.0
+		#auto_start = true
+		
+	if OS.is_debug_build():
+		start_button.visible = multiplayer.is_server()
+
 func _process(delta):
+	var local_player = MultiplayerController.get_local_player()
+	if local_player != null:
+		start_button.visible = local_player.master
+	
 	if auto_start:
 		start_in -= delta
 		if start_in < 0:
@@ -36,16 +49,8 @@ func _process(delta):
 			hero_names.remove_child(x)
 		
 		for player in players.get_children():
+			print(player)
 			_add_player(player.id, player.player_name, player.teller)
-# Called when the node enters the scene tree for the first time.
-
-
-func _ready():
-	if OS.is_debug_build():
-		start_in = 2.0
-		auto_start = true
-		
-	start_button.visible = multiplayer.is_server()
 
 func _player_joined(_id, _name):
 	pass
@@ -54,11 +59,13 @@ func _player_left(_id):
 	pass
 
 func _add_player(id, player_name, teller):
+	print("_add_player ", player_name)
 	var button = Button.new()
 	button.text = player_name
 	button.name = str(id)
 	
-	if multiplayer.is_server():
+	var local_player = MultiplayerController.get_local_player()
+	if local_player != null and local_player.master:
 		button.pressed.connect(func(): _toggle_teller(id))
 	
 	if teller:
@@ -68,8 +75,19 @@ func _add_player(id, player_name, teller):
 
 func _toggle_teller(id):
 	var player = players.get_node(str(id))
-	player.teller = !player.teller
+	_set_teller.rpc_id(1, id, !player.teller)
+	
+	#var player = players.get_node(str(id))
+	#player.teller = !player.teller
 
+@rpc("any_peer", "call_local", "reliable")
+func _set_teller(id, teller):
+	var caller = players.get_node(str(multiplayer.get_remote_sender_id()))
+	if not caller.master:
+		return
+	
+	var player = players.get_node(str(id))
+	player.teller = !player.teller
 
 @rpc("any_peer", "call_local", "reliable")
 func message(text: String, id: int):
@@ -90,8 +108,12 @@ func _on_exit_pressed():
 func _on_start_pressed():
 	start_game.rpc()
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func start_game():
+	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	if not caller.master:
+		return
+	
 	var world = world_scene.instantiate()
 	main.remove_child(lobby)
 	main.add_child(world)

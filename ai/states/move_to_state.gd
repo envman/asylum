@@ -12,6 +12,10 @@ func _ready():
 	nav_agent.velocity_computed.connect(move_player)
 
 func _physics_process(_delta):
+	if context.has("target_position"):
+		nav_agent.target_position = context["target_position"]
+		context.erase("target_position")
+	
 	var next_position: Vector3 = nav_agent.get_next_path_position()
 	var direction: Vector3 = player.global_position.direction_to(next_position) * nav_agent.max_speed
 	var new_agent_velocity: Vector3 = player.velocity + (direction - player.velocity)

@@ -6,8 +6,10 @@ static var SYNC_TYPE_CHANGE = 1
 
 var properties: Array[SyncProp] = []
 
+signal full_sync_completed
+
 func _ready():
-	_request_state.rpc_id(1)
+	_request_state.rpc_id(get_multiplayer_authority())
 
 func _physics_process(_delta):	
 	for index in properties.size():
@@ -56,6 +58,8 @@ func _update_prop(prop: SyncProp, val: Variant):
 	var node = prop.node
 	var prop_name = prop.prop_name
 	node[prop_name] = val
+	
+	sync_completed(prop)
 
 func add_property(node: Node, prop_name, sync_type = SYNC_TYPE_FULL):
 	var prop = SyncProp.new()
@@ -65,3 +69,15 @@ func add_property(node: Node, prop_name, sync_type = SYNC_TYPE_FULL):
 	prop.sync_type = sync_type
 	
 	properties.append(prop)
+
+func is_synced():
+	if get_multiplayer_authority() == multiplayer.get_unique_id():
+		return true
+	
+	return properties.all(func(p): return p.synced)
+
+func sync_completed(prop):
+	prop.synced = true
+	
+	if is_synced():
+		full_sync_completed.emit()

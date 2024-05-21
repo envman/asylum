@@ -28,7 +28,7 @@ var playback
 
 var child_ui
 var state_context = {}
-var controlling_player: int
+
 @export var start_state = "idle"
 
 func _ready():
@@ -98,6 +98,7 @@ func _physics_process(delta):
 
 @rpc("authority", "call_local", "reliable")
 func accept_player(id):
+	print(id, " accept player ", character_name)
 	var cam = camera_controller_scene.instantiate()
 	add_child(cam)
 	camera = cam
@@ -114,9 +115,10 @@ func release_player(id):
 	var owning_player = MultiplayerController.get_player(id)
 	owning_player.character = NodePath("")
 
-@rpc("call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func hand_off(id):
-	controlling_player = id
+	print(multiplayer.get_unique_id(), ": hand_off: ", id)
+	
 	get_parent().set_multiplayer_authority(id)
 	for child in get_children():
 		if child is Module or child is Spawnr:
@@ -126,10 +128,48 @@ func hand_off(id):
 	var owning_player = MultiplayerController.get_player(id)
 	owning_player.character = get_parent().get_path()
 	
-	if local_player.id == id and not local_player.teller:
+	if id == multiplayer.get_unique_id():
+	#if local_player != null and local_player.id == id and not local_player.teller:
 		accept_player(id)
-		name_label.text = local_player.player_name
-		character_name = local_player.player_name
+		#name_label.text = local_player.player_name
+		#character_name = local_player.player_name
+
+@rpc("any_peer", "call_local", "reliable")
+func request_control():
+	if get_multiplayer_authority() != 1:
+		print("cannot hand off already controlled character")
+		return
+	
+	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	if not caller.teller:
+		print("only tellers can request control")
+		return
+	
+	hand_off.rpc(multiplayer.get_remote_sender_id())
+
+@rpc("authority", "call_local", "reliable")
+func release_control():
+	#if get_multiplayer_authority() != multiplayer.get_remote_sender_id():
+		#print("cannot release character you don't control")
+		#return
+	#
+	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	if not caller.teller:
+		print("only tellers can release control")
+		return
+		
+	get_parent().set_multiplayer_authority(1)
+	
+	var local_player = MultiplayerController.get_local_player()
+	var owning_player = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	
+	release_player(multiplayer.get_remote_sender_id())
+	#if id == multiplayer.get_unique_id():
+	#if local_player != null and local_player.id == id and not local_player.teller:
+		#accept_player(id)
+		#name_label.text = local_player.player_name
+		#character_name = local_player.player_name
+	
 
 var state_name: String
 
@@ -138,6 +178,11 @@ func _on_animation_tree_animation_finished(anim_name):
 
 @rpc("any_peer", "call_local", "reliable")
 func change_state(new_state_name):
+	if multiplayer.get_remote_sender_id() != 0:
+		var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+		if get_multiplayer_authority() != 1 or not caller.teller:
+			return
+
 	if state != null:
 		state.exit()
 		state.queue_free()
@@ -153,3 +198,20 @@ func change_state(new_state_name):
 func set_animation(animation_name):
 	if player or (multiplayer.is_server() and get_multiplayer_authority() == 1):
 		current_animation = animation_name
+
+@rpc("any_peer", "call_local", "reliable")
+func add_state_context(key, value):
+	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	if get_multiplayer_authority() != 1 or not caller.teller:
+		return
+	
+	state_context[key] = value
+
+@rpc("any_peer", "call_local", "reliable")
+func remove_state_context(key):
+	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
+	if get_multiplayer_authority() != 1 or not caller.teller:
+		return
+		
+	if state_context.has(key):
+		state_context.erase(key)

@@ -1,4 +1,4 @@
-extends Node
+extends AsylumBase
 class_name Effect
 
 static func is_effect(obj: Node):

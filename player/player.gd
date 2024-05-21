@@ -6,6 +6,7 @@ class_name Player
 @export var player_name: String
 @export var teller: bool = false
 @export var character: NodePath
+@export var master: bool = false
 
 
 func get_character():

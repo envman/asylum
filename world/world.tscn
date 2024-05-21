@@ -399,51 +399,68 @@ transform = Transform3D(0.0882337, 0, -0.9961, 0, 1, 0, 0.9961, 0, 0.0882337, 19
 character_name = "Captain Flowers"
 
 [node name="Skeleton3D" parent="Characters/Flowers/Model/Rig" index="0"]
-bones/1/position = Vector3(0, 0.370745, 0)
-bones/4/rotation = Quaternion(-0.550503, -0.05891, -0.647026, 0.524246)
-bones/5/rotation = Quaternion(3.45444e-08, -3.80653e-08, -0.498927, 0.866644)
-bones/7/rotation = Quaternion(-0.318759, -0.335995, 0.142499, 0.874754)
-bones/8/rotation = Quaternion(0.00146963, 0.00146963, -0.701691, 0.712479)
-bones/14/rotation = Quaternion(-0.60962, 0.0793299, 0.621433, 0.485686)
-bones/15/rotation = Quaternion(2.34155e-08, 6.37896e-08, 0.521942, 0.852981)
-bones/17/rotation = Quaternion(-0.317764, 0.311211, -0.22449, 0.867051)
-bones/18/rotation = Quaternion(0.0044083, 0.00519234, 0.702507, 0.711644)
-bones/24/rotation = Quaternion(0.98991, 0.0836125, 0.0785035, 0.0832085)
-bones/25/rotation = Quaternion(0.384835, 5.85614e-08, -2.63378e-07, 0.922985)
-bones/26/rotation = Quaternion(-0.616157, -0.201448, 0.0748763, 0.757736)
-bones/28/rotation = Quaternion(0.991834, -0.0331301, 0.0299001, 0.119477)
-bones/29/rotation = Quaternion(0.430015, -5.95864e-08, 2.99485e-07, 0.902822)
-bones/30/rotation = Quaternion(-0.642553, 0.112646, -0.022485, 0.757582)
-bones/47/position = Vector3(0.520841, 0.768757, -0.0576374)
-bones/49/position = Vector3(-0.510844, 0.768757, 0.0597369)
+bones/1/position = Vector3(0, 0.385798, 0)
+bones/1/rotation = Quaternion(-1.11123e-10, 0.0431578, 2.57241e-09, 0.999068)
+bones/4/rotation = Quaternion(-0.555276, -0.063181, -0.654886, 0.508724)
+bones/5/rotation = Quaternion(1.81449e-08, -6.25554e-08, -0.476755, 0.879037)
+bones/7/rotation = Quaternion(-0.317661, -0.326283, 0.135968, 0.879854)
+bones/8/rotation = Quaternion(0.00144411, 0.0014441, -0.701785, 0.712386)
+bones/14/rotation = Quaternion(-0.614457, 0.0831136, 0.627742, 0.470612)
+bones/15/rotation = Quaternion(3.29657e-09, 4.95886e-08, 0.500803, 0.865561)
+bones/17/rotation = Quaternion(-0.316036, 0.300488, -0.21758, 0.873205)
+bones/18/rotation = Quaternion(0.00302969, 0.00356853, 0.703952, 0.710232)
+bones/21/rotation = Quaternion(-5.80608e-11, -0.0313417, -1.88012e-09, 0.999509)
+bones/24/rotation = Quaternion(0.992936, 0.0831874, 0.0754583, 0.0382567)
+bones/25/rotation = Quaternion(0.266742, 6.49145e-08, -1.86271e-07, 0.963768)
+bones/26/rotation = Quaternion(-0.554542, -0.207141, 0.0547022, 0.804104)
+bones/27/rotation = Quaternion(-3.04791e-08, 0.920355, -0.391084, 6.94848e-08)
+bones/28/rotation = Quaternion(0.995821, -0.0306292, 0.0309758, 0.080273)
+bones/29/rotation = Quaternion(0.328641, -6.25692e-08, 2.28461e-07, 0.944455)
+bones/30/rotation = Quaternion(-0.588114, 0.114078, -0.0132458, 0.800583)
+bones/31/rotation = Quaternion(3.04791e-08, 0.920355, -0.391084, -6.94849e-08)
+bones/32/rotation = Quaternion(0.707107, -2.29302e-07, -4.60552e-08, 0.707107)
+bones/33/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
+bones/34/rotation = Quaternion(9.65792e-09, 1.77955e-09, 0.985719, -0.168398)
+bones/35/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.9526e-08)
+bones/37/rotation = Quaternion(1, -3.10863e-15, 1.94707e-07, -6.91739e-22)
+bones/39/rotation = Quaternion(0.707107, -3.82385e-08, 1.45009e-07, 0.707107)
+bones/40/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
+bones/41/rotation = Quaternion(-5.83589e-09, 6.43837e-10, 0.994809, 0.101756)
+bones/42/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.95261e-08)
+bones/46/rotation = Quaternion(-0.707107, -7.27951e-08, -7.27951e-08, 0.707107)
+bones/47/position = Vector3(0.520841, 0.774922, -0.0576374)
+bones/47/rotation = Quaternion(0.794627, -1.47148e-07, 0.607098, -5.02923e-08)
+bones/48/rotation = Quaternion(-0.707107, -7.27951e-08, -7.27951e-08, 0.707107)
+bones/49/position = Vector3(-0.510844, 0.774922, 0.0597369)
+bones/49/rotation = Quaternion(-0.758253, -2.06196e-07, 0.651961, -2.17942e-08)
 
 [node name="1H_Sword_Offhand" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="0"]
-transform = Transform3D(-9.32116e-07, 0.262867, 0.964831, 0.999875, -0.0152532, 0.00415754, 0.01581, 0.964711, -0.262834, 0.511746, 0.616506, -0.00205901)
+transform = Transform3D(3.02437e-06, 0.262865, 0.964832, 0.999879, -0.0149918, 0.00408235, 0.0155381, 0.964715, -0.262833, 0.512004, 0.622336, -0.00342868)
 
 [node name="Badge_Shield" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="1"]
-transform = Transform3D(-9.09687e-07, 0.262867, 0.964831, 0.999875, -0.0152557, 0.00415821, 0.0158126, 0.964711, -0.262834, 0.662148, 0.617154, -0.0430309)
+transform = Transform3D(3.04679e-06, 0.262865, 0.964832, 0.999879, -0.0149943, 0.00408301, 0.0155408, 0.964715, -0.262833, 0.662407, 0.622973, -0.0444004)
 
 [node name="Rectangle_Shield" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="2"]
-transform = Transform3D(-9.09687e-07, 0.262867, 0.964831, 0.999875, -0.0152557, 0.00415821, 0.0158126, 0.964711, -0.262834, 0.662148, 0.617154, -0.0430309)
+transform = Transform3D(3.04679e-06, 0.262865, 0.964832, 0.999879, -0.0149943, 0.00408301, 0.0155408, 0.964715, -0.262833, 0.662407, 0.622973, -0.0444004)
 
 [node name="Round_Shield" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="3"]
-transform = Transform3D(-9.09687e-07, 0.262867, 0.964831, 0.999875, -0.0152557, 0.00415821, 0.0158126, 0.964711, -0.262834, 0.662148, 0.617154, -0.0430309)
+transform = Transform3D(3.04679e-06, 0.262865, 0.964832, 0.999879, -0.0149943, 0.00408301, 0.0155408, 0.964715, -0.262833, 0.662407, 0.622973, -0.0444004)
 
 [node name="Spike_Shield" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="4"]
-transform = Transform3D(-9.09687e-07, 0.262867, 0.964831, 0.999875, -0.0152557, 0.00415821, 0.0158126, 0.964711, -0.262834, 0.662148, 0.617154, -0.0430309)
+transform = Transform3D(3.04679e-06, 0.262865, 0.964832, 0.999879, -0.0149943, 0.00408301, 0.0155408, 0.964715, -0.262833, 0.662407, 0.622973, -0.0444004)
 
 [node name="1H_Sword" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="5"]
-transform = Transform3D(-0.00311826, -0.163287, 0.986573, 0.999915, -0.0129257, 0.00102008, 0.012586, 0.986493, 0.163314, -0.495972, 0.620677, 0.139523)
+transform = Transform3D(-0.002127, -0.159106, 0.987259, 0.99996, -0.00888514, 0.000721489, 0.00865766, 0.98722, 0.159118, -0.496353, 0.626399, 0.138182)
 
 [node name="2H_Sword" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="6"]
-transform = Transform3D(-0.00311827, -0.163287, 0.986573, 0.999915, -0.0129258, 0.0010201, 0.012586, 0.986493, 0.163314, -0.495972, 0.620677, 0.139523)
+transform = Transform3D(-0.00212702, -0.159106, 0.987259, 0.99996, -0.00888516, 0.000721502, 0.00865768, 0.98722, 0.159118, -0.496353, 0.626399, 0.138182)
 
 [node name="Knight_Helmet" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="7"]
-transform = Transform3D(0.99972, -1.40145e-09, 0.0236468, 1.39343e-09, 1, 3.55687e-10, -0.0236468, -3.22638e-10, 0.99972, 4.69869e-07, 1.18097, -1.19779e-07)
+transform = Transform3D(0.99972, -1.40145e-09, 0.0236468, 1.39343e-09, 1, 3.55687e-10, -0.0236468, -3.22638e-10, 0.99972, 4.69869e-07, 1.19603, -1.19779e-07)
 visible = false
 
 [node name="Knight_Cape" parent="Characters/Flowers/Model/Rig/Skeleton3D" index="8"]
-transform = Transform3D(0.996275, -5.14962e-09, 0.0862354, 5.13044e-09, 1, 4.44078e-10, -0.0862354, 1.47756e-15, 0.996275, -1.63022e-08, 1.18097, -1.40136e-07)
+transform = Transform3D(0.996275, -5.14962e-09, 0.0862354, 5.13044e-09, 1, 4.44078e-10, -0.0862354, 1.47756e-15, 0.996275, -1.63022e-08, 1.19603, -1.40136e-07)
 
 [node name="Doug" parent="Characters" instance=ExtResource("12_lpup6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.81742, 0.553053, 35.5366)

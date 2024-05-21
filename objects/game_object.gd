@@ -1,4 +1,4 @@
-extends Node
+extends AsylumBase
 class_name GameObject
 
 static func is_game_object(obj: Node) -> bool:

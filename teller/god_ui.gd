@@ -61,10 +61,14 @@ var selected:
 			if selected != null:
 				_remove_selected_circle(selected)
 				inspector_label.text = ""
+				
+				if GameObject.is_game_object(selected):
+					GameObject.object(selected).release_authority.rpc()
 			
 			if val != null:
 				_add_selected_circle(val)
 				if GameObject.is_game_object(val):
+					GameObject.object(val).request_authority.rpc()
 					inspector_label.text = GameObject.object(val).object_name
 					
 				if val is Character:
@@ -99,7 +103,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("leave"):
 		if mode == Mode.Controlling:
 			visible = true
-			selected.get_node(^"CharacterModule").release_player(MultiplayerController.get_local_player().id)
+			selected.get_node(^"CharacterModule").release_control.rpc()
+			#selected.get_node(^"CharacterModule").release_player(MultiplayerController.get_local_player().id)
 			get_parent().make_current()
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_parent().global_position = selected.global_position
@@ -273,7 +278,8 @@ func _on_control_pressed():
 	if selected != null and selected is Character:
 		get_parent().disable_levels()
 		
-		selected.get_node(^"CharacterModule").accept_player(MultiplayerController.get_local_player().id)
+		selected.get_node(^"CharacterModule").request_control.rpc_id(1)
+		#selected.get_node(^"CharacterModule").accept_player(MultiplayerController.get_local_player().id)
 		visible = false
 		mode = Mode.Controlling
 

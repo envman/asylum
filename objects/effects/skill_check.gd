@@ -15,6 +15,8 @@ enum Skill {
 @export var roll: int = 0
 @export var finished: bool = false
 
+@onready var sync = $Sync
+
 var rolling := false
 var roll_time := 0.0
 var roll_step = .001
@@ -22,6 +24,14 @@ var roll_step_adjustment = .001
 var next_step = 0
 
 var skill_check_ui_scene = preload("res://objects/effects/skill_check_ui.tscn")
+
+func _ready():
+	sync.add_property(self, "skill", Sync.SYNC_TYPE_CHANGE)
+	sync.add_property(self, "difficulty", Sync.SYNC_TYPE_CHANGE)
+	sync.add_property(self, "roll", Sync.SYNC_TYPE_CHANGE)
+	sync.add_property(self, "finished", Sync.SYNC_TYPE_CHANGE)
+	
+	super._ready()
 
 func client_start():
 	if not local:
@@ -51,10 +61,12 @@ func server_process(delta):
 		
 		if roll_step < 0:
 			roll = randi() % 20
+			print("roll_step ", roll)
 			roll_step_adjustment += .1
 			roll_step = roll_step_adjustment
 			
 		if roll_time < 0:
+			print("rolling_finished ", roll)
 			rolling = false
 			finished = true
 
@@ -67,8 +79,14 @@ func copy_to(obj):
 
 @rpc("any_peer", "call_local", "reliable")
 func start_roll():
+	print("start_roll")
 	if finished:
 		return
+		
+	if not multiplayer.is_server():
+		return
+	
+	print("multiplayer_authority: ", get_multiplayer_authority())
 	
 	rolling = true
 	roll_time = 5.0

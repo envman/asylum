@@ -45,6 +45,9 @@ func add_action(action: Action):
 
 func _process(_delta):
 	if Input.is_action_just_pressed("select"):
+		if actions.size() == 0:
+			return
+			
 		actions[index].act.rpc_id(1)
 		
 	if Input.is_action_just_pressed("action_next"):

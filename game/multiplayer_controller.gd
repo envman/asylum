@@ -9,8 +9,7 @@ var player_name: String
 var lobby_scene = preload("res://menu/lobby.tscn")
 var player_scene = preload("res://player/player.tscn")
 
-#var log = []
-
+var local_testing = false
 
 signal player_joined
 signal player_left
@@ -50,18 +49,24 @@ func add_player(id, player_name):
 	player.name = str(id)
 	player.id = id
 	player.player_name = player_name
+	player.master = players.get_child_count() == 0
 	
 	if OS.is_debug_build():
 		player.teller = multiplayer.get_remote_sender_id() == 1
-		
+
+	if not OS.is_debug_build() and multiplayer.get_remote_sender_id() == 1:
+		return
+			
 	players.add_child(player)
 
 func get_player_name(id: int):
 	var player = players.get_children().filter(func(x): return x.id == id)[0]
 	return player.player_name
 
-func join_lobby():	
-	add_player.rpc_id(1, multiplayer.get_unique_id(), player_name)
+func join_lobby():
+	if not OS.has_feature("dedicated_server"):
+		print("not server so create player")
+		add_player.rpc_id(1, multiplayer.get_unique_id(), player_name)
 
 	var lobby = lobby_scene.instantiate()
 	lobby.name = "Lobby"
@@ -69,7 +74,11 @@ func join_lobby():
 	main.remove_child(main_menu)
 
 func get_local_player() -> Player:
-	return players.get_children().filter(func(x): return x.id == multiplayer.get_unique_id())[0]
+	var filtered = players.get_children().filter(func(x): return x.id == multiplayer.get_unique_id())
+	if filtered.size() == 0:
+		return null
+	
+	return filtered[0]
 
 func get_players():
 	return players.get_children()

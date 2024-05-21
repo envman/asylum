@@ -51,4 +51,5 @@ func mouse_clicked(pos):
 	if spawning != null:
 		spawning.global_position = pos
 		spawned_objects.add_child(spawning, true)
+		
 		spawning = null

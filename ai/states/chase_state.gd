@@ -8,15 +8,21 @@ var attack: Attack
 func _ready():
 	player_module.set_animation("Walk")
 	nav_agent = context["nav_agent"]
-	target = context["attack_target"]
+	#target = context["attack_target"]
 	attack = context["attack"]
 	
-	nav_agent.target_position = target.global_position
+	#nav_agent.target_position = target.global_position
 	
 	#nav_agent.target_reached.connect(target_reached)
 	nav_agent.velocity_computed.connect(move_player)
 
 func _physics_process(_delta):
+	if not context.has("attack_target"):
+		return
+	
+	var target = get_node(context["attack_target"])
+	nav_agent.target_position = target.global_position
+	
 	var next_position: Vector3 = nav_agent.get_next_path_position()
 	var direction: Vector3 = player.global_position.direction_to(next_position) * nav_agent.max_speed
 	var new_agent_velocity: Vector3 = player.velocity + (direction - player.velocity)
