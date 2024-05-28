@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0rj8fb4fop7q"]
+
+[ext_resource type="Script" path="res://editors/character/character_editor.gd" id="1_b30oo"]
+
+[node name="CharacterEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b30oo")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 0
+offset_right = 1156.0
+offset_bottom = 650.0
+split_offset = 150
+dragger_visibility = 1
+
+[node name="Heros" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Dummy" type="Button" parent="HSplitContainer/Heros"]
+layout_mode = 2
+text = "Barbarian"
+
+[node name="Panel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/Panel"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 74.0
+offset_right = 209.0
+offset_bottom = 97.0
+text = "Strength"

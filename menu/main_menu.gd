@@ -9,6 +9,15 @@ var LOCAL_IP_ADDRESS = "127.0.0.1"
 var IP_ADDRESS = "3.9.134.31"
 var MAX_CLIENTS = 8
 
+var random_names = [
+	"Player",
+	"Eddie",
+	"Jimmy",
+	"Phillip",
+	"Gary",
+	"Martin"
+]
+
 func _ready():
 	host_button.visible = MultiplayerController.local_testing
 
@@ -45,8 +54,9 @@ func host(server = false):
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.multiplayer_peer = peer
 	
-	MultiplayerController.join_lobby()
-	print("JOIN LOBBY")
+	MultiplayerController.network_connected()
+	#MultiplayerController.join_lobby()
+	#print("JOIN LOBBY")
 	return true
 
 func join():
@@ -83,7 +93,7 @@ func _on_host_pressed():
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.multiplayer_peer = peer
 	
-	MultiplayerController.join_lobby()
+	#MultiplayerController.join_lobby()
 
 func _on_join_pressed():
 	var player_name = _get_name()
@@ -106,7 +116,8 @@ func _on_exit_pressed():
 func _get_name():				
 	if name_edit.text.length() < 3:
 		if OS.is_debug_build() and MultiplayerController.local_testing:
-			var p_name = "TEST " + str(randi())
+			var p_name = random_names.pick_random()
+			#var p_name = "TEST " + str(randi())
 			MultiplayerController.player_name = p_name
 			return p_name
 		

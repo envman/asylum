@@ -39,7 +39,7 @@ func _node_added(node: Node):
 	_add_node.rpc(node.scene_file_path, node.name)
 
 func release_node(node):
-	print("releasing node", node.name)
+	print("release_node")
 	node.release_authority.rpc()
 
 @rpc("any_peer", "reliable")
@@ -65,12 +65,11 @@ func _add_node(scene_path: String, object_name: String):
 			base = GameObject.object(obj)
 		
 		if base.has_node(^"Sync"):
-			print("node has sync")
 			var sync: Sync = base.get_node(^"Sync")
 			sync.full_sync_completed.connect(release_node.bind(obj))
 				
 		else:
-			release_node(obj)
+			release_node(base)
 	
 	ignore.append(obj)
 	add_child(obj)

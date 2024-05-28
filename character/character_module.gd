@@ -42,7 +42,8 @@ func _ready():
 	animation_tree = get_parent().get_node(^"AnimationTree")
 	playback = animation_tree.get("parameters/playback")
 	
-	change_state(start_state)
+	if multiplayer.is_server():
+		change_state(start_state)
 	
 	animation_tree.animation_finished.connect(_on_animation_tree_animation_finished)
 	
@@ -60,10 +61,10 @@ func _process(_delta):
 		return
 
 	if player:
-		if Input.is_action_pressed("crawl"):
-			get_parent().scale.y = .5
-		else:
-			get_parent().scale.y = 1
+		#if Input.is_action_pressed("crawl"):
+			#get_parent().scale.y = .5
+		#else:
+			#get_parent().scale.y = 1
 			
 		if Input.is_action_just_pressed("inventory"):
 			var inventory_ui = get_node(^"Inventory").view()
@@ -105,7 +106,9 @@ func accept_player(id):
 	player = true
 	var owning_player = MultiplayerController.get_player(id)
 	owning_player.character = get_parent().get_path()
-	change_state("idle")
+	
+	# TODO: This is probably needed for controlling
+	change_state.call_deferred("idle")
 
 @rpc("authority", "call_local", "reliable")
 func release_player(id):
@@ -178,11 +181,13 @@ func _on_animation_tree_animation_finished(anim_name):
 
 @rpc("any_peer", "call_local", "reliable")
 func change_state(new_state_name):
+	print("change_state called ", new_state_name, " by ", multiplayer.get_remote_sender_id())
 	if multiplayer.get_remote_sender_id() != 0:
 		var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 		if get_multiplayer_authority() != 1 or not caller.teller:
 			return
 
+	print("change_state ", new_state_name)
 	if state != null:
 		state.exit()
 		state.queue_free()

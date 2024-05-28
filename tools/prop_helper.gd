@@ -45,25 +45,6 @@ static func list_exported_props(obj):
 			result.append(prop.name)
 	
 	return result
-		#if prop.name == prop_name:
-			#print("prop: ", prop_name, " flags: ")
-			#var out = 0
-			#
-			#for key in PropFlags.keys():
-				#var val = PropFlags[key]
-				#
-				#if prop.usage & val:
-					#print("- ", key)
-					#out = out ^ val
-				#
-			#if prop.usage & 4102:
-				#print("MATCHES 4102")
-				#
-			#if _is_export(prop.usage):
-				#print("_is_export")
-			#print("combined: ", out)
-				
-				#print(key, " ", val)
 
 static func _is_export(flags):
 	return flags & PROPERTY_USAGE_STORAGE and flags & PROPERTY_USAGE_EDITOR and flags & PROPERTY_USAGE_SCRIPT_VARIABLE

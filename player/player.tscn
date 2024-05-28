@@ -18,6 +18,9 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath(".:master")
 properties/4/spawn = true
 properties/4/replication_mode = 2
+properties/5/path = NodePath(".:hero_name")
+properties/5/spawn = true
+properties/5/replication_mode = 2
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_cv1w7")

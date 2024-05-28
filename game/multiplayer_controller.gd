@@ -9,7 +9,8 @@ var player_name: String
 var lobby_scene = preload("res://menu/lobby.tscn")
 var player_scene = preload("res://player/player.tscn")
 
-var local_testing = false
+var local_testing = true
+var joined = false
 
 signal player_joined
 signal player_left
@@ -19,6 +20,21 @@ func _ready():
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	multiplayer.connected_to_server.connect(_connected_to_server)
 	multiplayer.connection_failed.connect(_connection_failed)
+	
+	#players.player_added.connect(player_added)
+
+func _process(delta):
+	if not joined and get_local_player() != null:
+		joined = true
+		join_lobby()
+
+#func player_added(player):
+	#print("player_added")
+	#if get_local_player() != null:
+		#print("GOT MY PLAYER")
+		#join_lobby()
+	#else:
+		#print("NO PLAYER")
 
 func _peer_connected(id: int):
 	_log("Player Connected: " + str(id))
@@ -32,13 +48,13 @@ func _peer_disconnected(id: int):
 func _connected_to_server():
 	_log("Connected to server")
 	
-	join_lobby()
+	network_connected()
+	#join_lobby()
 
 func _connection_failed():
 	_log("Connection failed")
 
 func _log(text: String):
-	#log.append(text)
 	print(text)
 
 @rpc("any_peer", "call_local", "reliable")
@@ -63,10 +79,15 @@ func get_player_name(id: int):
 	var player = players.get_children().filter(func(x): return x.id == id)[0]
 	return player.player_name
 
-func join_lobby():
+func network_connected():
 	if not OS.has_feature("dedicated_server"):
 		print("not server so create player")
 		add_player.rpc_id(1, multiplayer.get_unique_id(), player_name)
+
+func join_lobby():
+	#if not OS.has_feature("dedicated_server"):
+		#print("not server so create player")
+		#add_player.rpc_id(1, multiplayer.get_unique_id(), player_name)
 
 	var lobby = lobby_scene.instantiate()
 	lobby.name = "Lobby"
@@ -74,6 +95,9 @@ func join_lobby():
 	main.remove_child(main_menu)
 
 func get_local_player() -> Player:
+	if players == null:
+		return null
+	
 	var filtered = players.get_children().filter(func(x): return x.id == multiplayer.get_unique_id())
 	if filtered.size() == 0:
 		return null
