@@ -1,5 +1,4 @@
 extends Node3D
-
 class_name World
 
 var god_camera_scene = preload("res://teller/god_camera.tscn")
@@ -8,7 +7,7 @@ var wizard_scene = preload("res://character/wizard/wizard.tscn")
 
 @onready var characters = $Characters
 @onready var objects = $NavigationRegion/Objects
-@onready var navigation_region = $NavigationRegion
+@onready var navigation_region: NavigationRegion3D = $NavigationRegion
 
 var heros
 
@@ -32,6 +31,8 @@ func _ready():
 	
 	if not MultiplayerController.get_local_player().teller:
 		_find_character.rpc_id(1)
+		
+	navigation_region.bake_finished.connect(_bake_finished)
 
 @rpc("any_peer", "call_local", "reliable")
 func _find_character():
@@ -54,5 +55,19 @@ func spawn_character(pos: Vector3):
 	character.owner = self
 	character.hand_off.rpc(MultiplayerController.get_local_player().id)
 
+var bake_in_progress = false
+var bake_queued = false
+
 func bake_navigation_mesh():
-	navigation_region.bake_navigation_mesh(true)
+	if bake_in_progress:
+		bake_queued = true
+	else:
+		bake_in_progress = true
+		navigation_region.bake_navigation_mesh(true)
+
+func _bake_finished():
+	bake_in_progress = false
+	
+	if bake_queued:
+		bake_queued = false
+		bake_navigation_mesh()

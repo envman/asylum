@@ -13,37 +13,37 @@ script = ExtResource("1_4yx2q")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 1154.0
+offset_right = 555.0
 offset_bottom = 650.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 56.0
+offset_left = 31.0
 offset_top = 24.0
-offset_right = 131.0
+offset_right = 106.0
 offset_bottom = 47.0
 text = "Inventory"
 
 [node name="ItemList" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 138.0
-offset_top = 80.0
-offset_right = 398.0
-offset_bottom = 522.0
+offset_left = 35.0
+offset_top = 65.0
+offset_right = 295.0
+offset_bottom = 507.0
 
 [node name="ActionList" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 434.0
-offset_top = 80.0
-offset_right = 694.0
-offset_bottom = 522.0
+offset_left = 293.0
+offset_top = 58.0
+offset_right = 553.0
+offset_bottom = 500.0
 
 [node name="AddItem" type="Button" parent="."]
 layout_mode = 0
-offset_left = 143.0
-offset_top = 558.0
-offset_right = 222.0
-offset_bottom = 589.0
+offset_left = 60.0
+offset_top = 561.0
+offset_right = 139.0
+offset_bottom = 592.0
 text = "Add Item"
 
 [connection signal="pressed" from="AddItem" to="." method="_on_add_item_pressed"]

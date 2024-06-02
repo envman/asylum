@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfcc1wm8yc68j"]
+
+[ext_resource type="Script" path="res://worlds/parallel_executor.gd" id="1_kob3r"]
+
+[node name="ParallelExecutor" type="Node3D"]
+script = ExtResource("1_kob3r")

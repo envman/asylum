@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxdfvggos51cr"]
+
+[ext_resource type="Script" path="res://objects/Lockable.gd" id="1_aakee"]
+[ext_resource type="PackedScene" uid="uid://b2ts5ibmggqef" path="res://module/action.tscn" id="2_urbue"]
+[ext_resource type="Script" path="res://module/lock_action.gd" id="3_85anw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4scth"]
+properties/0/path = NodePath(".:locked")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="Lockable" type="Node3D"]
+script = ExtResource("1_aakee")
+
+[node name="Lock" parent="." node_paths=PackedStringArray("object") instance=ExtResource("2_urbue")]
+script = ExtResource("3_85anw")
+action_name = "Lock"
+object = NodePath("..")
+method = "toggle_lock"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4scth")

@@ -62,6 +62,33 @@ offset_top = 26.0
 offset_right = 236.0
 offset_bottom = 282.0
 
+[node name="Worlds" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.295139
+anchor_top = 0.223765
+anchor_right = -0.278646
+anchor_bottom = 0.438272
+offset_left = 367.0
+offset_top = 193.0
+offset_right = 585.0
+offset_bottom = 342.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Worlds"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 55.0
+offset_bottom = 23.0
+text = "Worlds"
+
+[node name="WorldNames" type="VBoxContainer" parent="Worlds"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 26.0
+offset_right = 236.0
+offset_bottom = 282.0
+
 [node name="Chat" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1

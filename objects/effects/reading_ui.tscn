@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cm6inw3iots4o"]
+[gd_scene load_steps=3 format=3 uid="uid://cm6inw3iots4o"]
 
 [ext_resource type="Script" path="res://objects/effects/reading_ui.gd" id="1_70r21"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pb628"]
+bg_color = Color(0.0195541, 0.0195541, 0.0195541, 1)
 
 [node name="ReadingUI" type="Control"]
 layout_mode = 3
@@ -13,6 +16,7 @@ offset_left = 189.0
 offset_top = 42.0
 offset_right = 996.0
 offset_bottom = 610.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pb628")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 layout_mode = 0

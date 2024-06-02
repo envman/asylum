@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dklfbbideqbj3"]
+
+[ext_resource type="Script" path="res://module/inventory.gd" id="1_uictk"]
+[ext_resource type="Script" path="res://module/view.gd" id="2_71i7w"]
+[ext_resource type="PackedScene" uid="uid://c1tb1nj12mf1b" path="res://module/dual_inventory.tscn" id="3_cb3qf"]
+
+[node name="Inventory" type="Node3D"]
+visible = false
+script = ExtResource("1_uictk")
+
+[node name="View" type="Node3D" parent="."]
+script = ExtResource("2_71i7w")
+scene = ExtResource("3_cb3qf")
+action_name = "view"

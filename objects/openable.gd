@@ -18,6 +18,7 @@ var start_rotation
 var parent
 
 signal state_changed
+signal change_completed
 
 func _ready():
 	get_parent().set_collision_layer_value(2, true)
@@ -56,6 +57,7 @@ func _process(delta):
 
 func finished():
 	world.bake_navigation_mesh()
+	change_completed.emit()
 
 func toggle_open(_player):
 	open = !open

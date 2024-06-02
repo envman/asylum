@@ -21,7 +21,7 @@ func hit(_player):
 	
 	cooldown_time = cooldown
 	
-	var target = _get_target()
+	var target = get_target()
 	if target == null:
 		return
 	
@@ -42,7 +42,7 @@ func hit(_player):
 
 func _available():
 	var character = _get_character()
-	var target = _get_target()
+	var target = get_target()
 	
 	if character == null or target == null:
 		return false
@@ -52,7 +52,7 @@ func _available():
 func _get_character():
 	return get_parent().get_parent().get_parent().get_parent().get_parent()
 
-func _get_target():
+func get_target():
 	var character_module = get_parent().get_parent().get_parent().get_parent()
 	if character_module == null:
 		return

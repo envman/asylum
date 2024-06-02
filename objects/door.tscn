@@ -1,12 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfa72tn0rxwp6"]
+[gd_scene load_steps=10 format=3 uid="uid://dfa72tn0rxwp6"]
 
 [ext_resource type="Script" path="res://objects/door.gd" id="1_g0d32"]
 [ext_resource type="Texture2D" uid="uid://begpxhxxpgrv5" path="res://world/walls/wall_doorway_dungeon_texture.png" id="1_t0nu8"]
-[ext_resource type="Script" path="res://objects/openable.gd" id="3_2b7rw"]
-[ext_resource type="PackedScene" uid="uid://b2ts5ibmggqef" path="res://module/action.tscn" id="4_yrfqh"]
-[ext_resource type="Script" path="res://module/open_action.gd" id="5_8leg1"]
-[ext_resource type="Script" path="res://objects/Lockable.gd" id="5_cqtsq"]
-[ext_resource type="Script" path="res://module/lock_action.gd" id="7_ocovs"]
+[ext_resource type="PackedScene" uid="uid://bvn45s0qo0kns" path="res://module/openable.tscn" id="3_8d805"]
+[ext_resource type="PackedScene" uid="uid://cxdfvggos51cr" path="res://module/lockable.tscn" id="4_7boct"]
 [ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="8_y6pw4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v7mo"]
@@ -51,16 +48,6 @@ shadow_mesh = SubResource("ArrayMesh_2xj6v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_5k4gv"]
 size = Vector3(2, 3, 0.3)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_s84db"]
-properties/0/path = NodePath("Openable:open")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4scth"]
-properties/0/path = NodePath(".:locked")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-
 [node name="Door" type="StaticBody3D"]
 script = ExtResource("1_g0d32")
 
@@ -73,30 +60,13 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1.5, 2.08165e-12)
 shape = SubResource("BoxShape3D_5k4gv")
 
-[node name="Openable" type="Node3D" parent="."]
-script = ExtResource("3_2b7rw")
+[node name="Openable" parent="." instance=ExtResource("3_8d805")]
 
-[node name="Open" parent="Openable" node_paths=PackedStringArray("object") instance=ExtResource("4_yrfqh")]
-script = ExtResource("5_8leg1")
-object = NodePath("..")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Openable"]
-root_path = NodePath("../..")
-replication_config = SubResource("SceneReplicationConfig_s84db")
-
-[node name="Lockable" type="Node3D" parent="." node_paths=PackedStringArray("target")]
-script = ExtResource("5_cqtsq")
+[node name="Lockable" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_7boct")]
 target = NodePath("../Openable/Open")
-
-[node name="Lock" parent="Lockable" node_paths=PackedStringArray("object") instance=ExtResource("4_yrfqh")]
-script = ExtResource("7_ocovs")
-action_name = "Lock"
-object = NodePath("..")
-method = "toggle_lock"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Lockable"]
-replication_config = SubResource("SceneReplicationConfig_4scth")
 
 [node name="Object" parent="." instance=ExtResource("8_y6pw4")]
 object_name = "Door"
 heavy = true
+
+[editable path="Openable"]

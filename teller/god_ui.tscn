@@ -13,22 +13,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gvxnr")
 
-[node name="ChatsLabel" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1001.0
-offset_top = 7.0
-offset_right = 1053.0
-offset_bottom = 30.0
-text = "Conversations"
-
-[node name="Chats" parent="." instance=ExtResource("2_1sneo")]
-visible = false
-layout_mode = 1
-offset_left = 1001.0
-offset_top = 40.0
-offset_bottom = -444.0
-
 [node name="HerosLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 3.0

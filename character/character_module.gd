@@ -177,17 +177,18 @@ func release_control():
 var state_name: String
 
 func _on_animation_tree_animation_finished(anim_name):
-	state.animation_finished(anim_name)
+	if state != null:
+		state.animation_finished(anim_name)
 
 @rpc("any_peer", "call_local", "reliable")
 func change_state(new_state_name):
-	print("change_state called ", new_state_name, " by ", multiplayer.get_remote_sender_id())
+	#print("change_state called ", new_state_name, " by ", multiplayer.get_remote_sender_id())
 	if multiplayer.get_remote_sender_id() != 0:
 		var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 		if get_multiplayer_authority() != 1 or not caller.teller:
 			return
 
-	print("change_state ", new_state_name)
+	#print("change_state ", new_state_name)
 	if state != null:
 		state.exit()
 		state.queue_free()

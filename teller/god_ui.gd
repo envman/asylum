@@ -6,13 +6,15 @@ extends Control
 @onready var camera = $".."
 @onready var players: PlayerManager = $/root/Main/Players
 @onready var world: World = $/root/Main/World
+@onready var triggers = $/root/Main/World/Triggers
 @onready var object_inspector: Inspector = $RightHandPanel/Inspectors/ObjectInspector
 @onready var inspector_label = $RightHandPanel/InspectorLabel
 
-@onready var chat_manager: ChatManager = $/root/Main/World/Chats
+#@onready var chat_manager: ChatManager = $/root/Main/World/Chats
 
 @onready var heros = $Heros
 @onready var chats = $Chats
+@onready var buttons = $Buttons
 @onready var control = $Buttons/Control
 @onready var add_effect = $Buttons/AddEffect
 @onready var inspectors = $RightHandPanel/Inspectors
@@ -86,12 +88,20 @@ func _ready():
 	heros.get_items = players.get_heros
 	heros.render_label("player_name")
 	
-	chats.get_items = chat_manager.get_chats
-	chats.render_item = func(x):
+	for trigger in triggers.get_children():
 		var button = Button.new()
-		button.text = MultiplayerController.get_player_name(x.player_id)
-		button.pressed.connect(func(): chat_selected(x))
-		return button
+		button.text = trigger.name
+		button.pressed.connect(func():
+			trigger.execute.rpc_id(1)
+		)
+		buttons.add_child(button)
+	
+	#chats.get_items = chat_manager.get_chats
+	#chats.render_item = func(x):
+		#var button = Button.new()
+		#button.text = MultiplayerController.get_player_name(x.player_id)
+		#button.pressed.connect(func(): chat_selected(x))
+		#return button
 
 func _process(_delta):
 	remove_button.visible = selected != null

@@ -14,6 +14,8 @@ class_name Action
 signal name_updated
 signal available_updated
 
+signal action_completed
+
 var available = true:
 	set(val):
 		if available != val:
@@ -21,6 +23,12 @@ var available = true:
 
 		available = val
 		
+
+func run():
+	if "act_local" in self:
+		self["act_local"].call()
+	else:
+		act.rpc_id(1)
 
 @rpc("any_peer", "call_local", "reliable")
 func act():

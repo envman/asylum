@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctp2fgu67ph1m"]
+[gd_scene load_steps=8 format=3 uid="uid://ctp2fgu67ph1m"]
 
 [ext_resource type="Texture2D" uid="uid://c51xdopjxmgqq" path="res://assets/dungeon/key_dungeon_texture.png" id="1_g3v1e"]
 [ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="1_lbybm"]
+[ext_resource type="Script" path="res://objects/key.gd" id="1_weqeu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dk2hm"]
 size = Vector3(1, 2, 1)
@@ -48,6 +49,7 @@ shadow_mesh = SubResource("ArrayMesh_oughd")
 [node name="Key" type="StaticBody3D"]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("1_weqeu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)

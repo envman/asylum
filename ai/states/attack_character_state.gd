@@ -15,7 +15,7 @@ func _ready():
 	attack = context["attack"]
 
 func _physics_process(_delta):
-	if attack._available():
+	if attack._available() and attack.get_target() == get_node(target):
 		player_module.set_animation("Attack")
 		attack.hit(null)
 	else:

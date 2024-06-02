@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bj7trryvuhhwx"]
+[gd_scene load_steps=8 format=3 uid="uid://bj7trryvuhhwx"]
 
 [ext_resource type="Texture2D" uid="uid://11bt0ofx8n37" path="res://world/objects/box_large_dungeon_texture.png" id="1_qvuox"]
 [ext_resource type="PackedScene" uid="uid://c01un2xxp2mk4" path="res://objects/object.tscn" id="2_excmw"]
+[ext_resource type="PackedScene" uid="uid://dklfbbideqbj3" path="res://module/inventory.tscn" id="3_wwhuj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iv1ag"]
 resource_name = "texture"
@@ -41,20 +42,22 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2ph8u")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_34weg"]
-size = Vector3(1.5, 1.5, 1.5)
+size = Vector3(1.5, 2, 1.5)
 
 [node name="Crate" type="StaticBody3D"]
 
-[node name="box_large" type="MeshInstance3D" parent="."]
+[node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152291, 0, 0.178166)
 mesh = SubResource("ArrayMesh_cf0mg")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152291, 0.775633, 0.178166)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152, 1, 0.178)
 shape = SubResource("BoxShape3D_34weg")
 
 [node name="Object" parent="." instance=ExtResource("2_excmw")]
 object_name = "Crate"
 inventory = false
 heavy = true
+
+[node name="Inventory" parent="." instance=ExtResource("3_wwhuj")]

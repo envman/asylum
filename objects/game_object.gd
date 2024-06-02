@@ -34,6 +34,7 @@ static func setup_objects(multiplayer_spawner: MultiplayerSpawner) -> void:
 @export var inventory: bool = true
 @export var heavy: bool = false
 @export var held: bool = false
+@export var hidden:bool = false
 
 @onready var sync_me: Sync = $Sync
 @onready var label = $Label3D

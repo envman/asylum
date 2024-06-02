@@ -10,6 +10,7 @@ var highlight
 var highlight_duration = 0.6
 
 func server_start():
+	print("damagable", get_path())
 	var damagable = get_parent().get_parent().get_node(^"Damagable")
 	damagable.hit(amount, creator)
 	

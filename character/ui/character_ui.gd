@@ -21,6 +21,7 @@ func _ready():
 	_load_actions()
 	
 	# TODO: fix this!
+	inventory.children_updated.connect(_load_actions)
 	#inventory.inventory_updated.connect(_load_actions)
 
 func _process(_delta):
@@ -47,11 +48,11 @@ func _process(_delta):
 	if Input.is_action_just_pressed("hotbar_0"):
 		_fire_action(9)
 
-func _input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if actions.size() > 0:
-				_fire_action(0)
+#func _input(event):
+	#if event is InputEventMouseButton:
+		#if event.button_index == MOUSE_BUTTON_LEFT:
+			#if actions.size() > 0:
+				#_fire_action(0)
 
 func _fire_action(index):
 	if actions.size() <= 0:
@@ -66,7 +67,9 @@ func _fire_action(index):
 		
 		if "state" in action:
 			character_module.change_state(action.state)
-		action.act.rpc_id(1)
+			
+		#action.act.rpc_id(1)
+		action.run()
 		button.click()
 
 func _load_actions():

@@ -4,6 +4,8 @@ var lockable_action_scene = preload("res://module/lockable_action.tscn")
 
 var lockable
 
+@export var door_code = "key"
+
 @export var target: Action
 @export var locked: bool = true:
 	set(val):

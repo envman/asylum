@@ -9,13 +9,9 @@ var selected: Node3D:
 	set(val):
 		if val != selected:
 			if selected != null:
-				selected.remove_child(selected.get_node(^"Highlight"))
 				remove_ui()
 			
 			if val != null:
-				var highlight = highlight_scene.instantiate()
-				highlight.name = "Highlight"
-				val.add_child(highlight)
 				add_ui(val)
 		
 		selected = val
@@ -27,7 +23,14 @@ var action_ui
 
 func add_ui(obj):
 	for c in obj.get_children():
-		if c is Module or c is GameObject:
+		if c is Module or c is GameObject or "module" in c:
+			if c is GameObject:
+				if c.hidden:
+					if action_ui != null:
+						get_parent().remove_child(action_ui)
+						action_ui = null
+					return
+			
 			for mod_child in c.get_children():
 				if mod_child is Action:
 					if action_ui == null:
@@ -38,8 +41,15 @@ func add_ui(obj):
 					
 					if mod_child.available:
 						action_ui.add_action(mod_child)
+	
+	var highlight = highlight_scene.instantiate()
+	highlight.name = "Highlight"
+	obj.add_child(highlight)
 
 func remove_ui():
+	if selected != null and selected.has_node(^"Highlight"):
+		selected.remove_child(selected.get_node(^"Highlight"))
+	
 	if action_ui == null:
 		return
 	

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://character/character_module.gd" id="1_b4vxi"]
 [ext_resource type="Script" path="res://character/selector.gd" id="2_0vmqf"]
-[ext_resource type="Script" path="res://module/inventory.gd" id="3_w6umj"]
+[ext_resource type="PackedScene" uid="uid://dklfbbideqbj3" path="res://module/inventory.tscn" id="3_qubkb"]
 [ext_resource type="PackedScene" uid="uid://dh6s6wc5xgtfd" path="res://objects/fist.tscn" id="4_fthwo"]
 [ext_resource type="Script" path="res://character/targeter.gd" id="5_pw2ge"]
 [ext_resource type="PackedScene" uid="uid://2ejjnkba5n8k" path="res://module/damagable.tscn" id="6_mtl2g"]
@@ -33,9 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57571, -0.659095)
 target_position = Vector3(2.08165e-12, 2.08165e-12, -2)
 collision_mask = 3
 
-[node name="Inventory" type="Node3D" parent="."]
-visible = false
-script = ExtResource("3_w6umj")
+[node name="Inventory" parent="." instance=ExtResource("3_qubkb")]
 
 [node name="Fist" parent="Inventory" instance=ExtResource("4_fthwo")]
 

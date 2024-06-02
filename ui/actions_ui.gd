@@ -47,8 +47,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("select"):
 		if actions.size() == 0:
 			return
-			
-		actions[index].act.rpc_id(1)
+		
+		actions[index].run()
+		#actions[index].act.rpc_id(1)
 		
 	if Input.is_action_just_pressed("action_next"):
 		index = clamp(index + 1, 0, actions.size() - 1)

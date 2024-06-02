@@ -15,7 +15,11 @@ func _has_key(character):
 		return false
 		
 	var inventory = inventories[0]
-	return inventory.has_named_item("Key")
+	for child in inventory.get_children():
+		if child is Key and child.code == get_parent().door_code:
+			return true
+	
+	return false
 
 func _state_changed(locked: bool):
 	is_locked = locked

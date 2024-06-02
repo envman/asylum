@@ -3,6 +3,8 @@ class_name Spawnr
 
 var ignore = []
 
+signal children_updated
+
 func _ready():
 	child_entered_tree.connect(_node_added)
 	child_exiting_tree.connect(_node_removed)
@@ -23,6 +25,7 @@ func add_copy(node: Node):
 func _node_added(node: Node):
 	print("node added: ", node.name)
 	# TODO: Should I have whitelist?
+	children_updated.emit()
 	
 	var player = MultiplayerController.get_local_player()
 	var teller = player != null and player.teller
@@ -76,6 +79,7 @@ func _add_node(scene_path: String, object_name: String):
 	
 func _node_removed(node: Node):
 	print("_node_removed: ", node.name)
+	_emit_children_updated.call_deferred()
 	
 	var player = MultiplayerController.get_local_player()
 	var teller = player != null and player.teller
@@ -106,6 +110,16 @@ func _remove_node(node_name: String):
 	ignore.append(node)
 	remove_child(node)
 
+@rpc("any_peer", "call_local", "reliable")
+func move_server(node_path):
+	if not multiplayer.is_server():
+		return
+	
+	# TODO: some kind of check that you're near the item
+	
+	print("move_server ", node_path)
+	move(get_node(node_path))
+
 func move(node: Node):
 	if not multiplayer.is_server():
 		return
@@ -113,8 +127,13 @@ func move(node: Node):
 	ignore.append(node)
 	
 	var parent = node.get_parent()
-	if parent is Spawnr:
-		parent.ignore.append(node)
+	
+	if not parent is Spawnr:
+		print("ATTEMPT TO MOVE OBJECT NOT IN SPAWNER")
+		return
+	
+	#if parent is Spawnr:
+	parent.ignore.append(node)
 		
 	_move_node.rpc(node.get_path())
 
@@ -127,3 +146,6 @@ func _move_node(node_path: NodePath):
 	var sel = self
 	
 	sel.add_child(node)
+
+func _emit_children_updated():
+	children_updated.emit()

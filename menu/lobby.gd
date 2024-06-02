@@ -9,6 +9,9 @@ extends Control
 @onready var characters_panel = $Characters
 @onready var character_names = $Characters/CharacterNames
 
+@onready var worlds = $Worlds
+@onready var world_names = $Worlds/WorldNames
+
 @onready var message_input = $Chat/Message
 @onready var chat_lines = $Chat/ChatLines
 
@@ -21,6 +24,7 @@ var auto_start = false
 
 var heros
 var assigning_character
+var selected_world: World
 
 func _ready():
 	#var local_player = MultiplayerController.get_local_player()
@@ -37,10 +41,27 @@ func _ready():
 	if OS.is_debug_build():
 		start_button.visible = multiplayer.is_server()
 	
-	load_characters()
+	load_worlds()
+	#load_characters()
 	
 	players.player_updated.connect(player_updated)
 	player_updated()
+
+func load_worlds():
+	for world in world_names.get_children():
+		world_names.remove_child(world)
+	
+	var worlds = [world_scene.instantiate()]
+	worlds.append_array(Load.find_all_with_filter("worlds", func(x): return x is World, true))
+	
+	for world in worlds:		
+		var button = Button.new()
+		button.text = world.name
+		button.pressed.connect(func():
+			load_characters(world)
+			selected_world = world
+		)
+		world_names.add_child(button)
 
 func player_updated():
 	for player in player_names.get_children():
@@ -74,8 +95,10 @@ func player_pressed(player):
 	#_set_teller.rpc_id(1, id, !player.teller)
 	_set_teller.rpc_id(1, player.id, !player.teller)
 
-func load_characters():
-	var w = world_scene.instantiate()
+func load_characters(w):
+	for character in character_names.get_children():
+		character_names.remove_child(character)
+	#var w = world_scene.instantiate()
 	var character_manager = w.get_node("Characters")
 	heros = character_manager.get_heros()
 	for hero in heros:
@@ -92,6 +115,7 @@ func _process(delta):
 	var local_player = MultiplayerController.get_local_player()
 	if local_player != null:
 		start_button.visible = local_player.master
+		worlds.visible = local_player.master or multiplayer.is_server()
 	
 	if auto_start:
 		start_in -= delta
@@ -188,16 +212,22 @@ func _on_start_pressed():
 		if not player.teller and player.hero_name.length() == 0:
 			print("player is not setup as teller or hero")
 			return
+		
+	if selected_world == null:
+		print("no world selected")
+		return
 	
-	start_game.rpc()
+	start_game.rpc(selected_world.scene_file_path)
 
 @rpc("any_peer", "call_local", "reliable")
-func start_game():
+func start_game(scene_path):
 	var caller = MultiplayerController.get_player(multiplayer.get_remote_sender_id())
 	if not caller.master:
 		return
 	
-	var world = world_scene.instantiate()
+	var selected_world_scene = load(scene_path)
+	var world = selected_world_scene.instantiate()
+	world.name = "World"
 	main.remove_child(lobby)
 	main.add_child(world)
 	#get_tree().change_scene_to_packed(game_scene)
