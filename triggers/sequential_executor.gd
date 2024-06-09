@@ -6,7 +6,8 @@ var current_index = 0
 
 func _ready():
 	for child in get_children():
-		child.finished.connect(_child_completed)
+		if "finished" in child:
+			child.finished.connect(_child_completed)
 
 @rpc("any_peer", "call_local", "reliable")
 func execute():
@@ -24,6 +25,9 @@ func execute():
 func run_current():
 	var child = get_child(current_index)
 	child.execute()
+	
+	if not "finished" in child:
+		_child_completed()
 
 func _child_completed():
 	current_index += 1

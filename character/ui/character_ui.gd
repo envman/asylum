@@ -58,6 +58,9 @@ func _fire_action(index):
 	if actions.size() <= 0:
 		return
 	
+	if index >= hotbar.get_child_count():
+		return
+	
 	var button = hotbar.get_child(index)
 	
 	if button.can_fire():
@@ -95,7 +98,10 @@ func _load_actions():
 						button.text = str(index) + ": " + action.action_name
 						hotbar.add_child(button)
 						actions.append(action)
-						action.available_updated.connect(func(x): button.available = x)
+						action.available_updated.connect(func(x):
+							if x != null:
+								button.available = x
+						)
 						
 						index += 1
 			

@@ -9,7 +9,11 @@ func _ready():
 		if "finished" in child:
 			child.finished.connect(_child_completed)
 
+@rpc("any_peer", "call_local", "reliable")
 func execute():
+	if not multiplayer.is_server():
+		return
+	
 	for child in get_children():
 		child.execute()
 		

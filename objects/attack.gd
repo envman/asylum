@@ -46,7 +46,10 @@ func _available():
 	
 	if character == null or target == null:
 		return false
-		
+	
+	if not target is Character:
+		return
+	
 	return character.global_position.distance_to(target.global_position) <= range
 
 func _get_character():
